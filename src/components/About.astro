@@ -50,9 +50,15 @@ const timeline = [
       </div>
     </div>
 
-    <div class="film">
-      <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
-      <p class="cap">My NICA racing journey, in about three minutes.</p>
+    <div class="films">
+      <div>
+        <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
+        <p class="cap">My NICA racing journey, in about three minutes.</p>
+      </div>
+      <div>
+        <YouTube id={site.youtube.ride} title="Riding, shot on GoPro chest mount" />
+        <p class="cap">And this is what free time looks like. GoPro on a chest mount, no crew.</p>
+      </div>
     </div>
 
     <ul class="hobbies">
@@ -95,8 +101,8 @@ const timeline = [
   .intro-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius); }
   .intro-text .lede { margin-bottom: 1.25rem; }
 
-  .film { margin-bottom: 3rem; }
-  @media (min-width: 900px) { .film { width: min(100%, 880px); } }
+  .films { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
+  @media (min-width: 700px) { .films { grid-template-columns: 1fr 1fr; } }
 
   .hobbies { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
   @media (min-width: 700px) { .hobbies { grid-template-columns: repeat(4, 1fr); } }
