@@ -1,0 +1,33 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="section contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h-section">Say hi</h2>
+      <p class="lede">If you're building something and need another pair of hands, or you just want to talk rockets, I'd love to hear from you.</p>
+    </div>
+    <ul class="contact-list">
+      {site.emails.map((e) => <li><span class="meta">Email</span><a href={`mailto:${e}`}>{e}</a></li>)}
+      <li><span class="meta">GitHub</span><a href={site.github} rel="noopener">github.com/matthew-foote</a></li>
+      {site.linkedin && <li><span class="meta">LinkedIn</span><a href={site.linkedin} rel="noopener">{site.linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a></li>}
+      {site.instagram && <li><span class="meta">Instagram</span><a href={site.instagram} rel="noopener">{site.instagram.replace(/^https?:\/\/(www\.)?/, '')}</a></li>}
+      <li><span class="meta">Onshape</span><a href={site.links.onshape} rel="noopener">The rocket engine, live in CAD</a></li>
+      <li><span class="meta">Resume</span><a href={site.resumePath} download>Download the PDF</a></li>
+    </ul>
+    <p class="open-to">Open to build engineering, structures, and propulsion internships.</p>
+    <p class="colophon meta">Made by Matthew in Provo, Utah. {year}.</p>
+  </div>
+</footer>
+
+<style>
+  .contact { background: var(--moss); margin-top: var(--section); padding-top: clamp(3rem, 7vw, 5rem); padding-bottom: clamp(3rem, 6vw, 4.5rem); }
+  .contact .section-head { border-top-color: var(--line); }
+  .contact-list { display: grid; gap: 0.75rem; border-top: 1px solid var(--line); }
+  .contact-list li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; }
+  .contact-list a { color: var(--ink); text-decoration-color: var(--tan-deep); }
+  .contact-list a:hover { color: var(--forest-deep); }
+  .open-to { margin-top: 2rem; font-weight: 600; font-size: 1.1rem; }
+  .colophon { margin-top: 1rem; }
+</style>

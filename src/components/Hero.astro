@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import hero from '../assets/img/hero-race.jpg';
+---
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <p class="hero-name">{site.name}</p>
+      <h1 class="display hero-title">
+        <span>I build</span>
+        <span>hardware</span>
+        <span>for flight.</span>
+      </h1>
+      <p class="lede hero-sub">{site.subline}</p>
+      <div class="hero-actions">
+        <a class="btn solid" href="#ambition">See the engine I'm building</a>
+        <a class="btn" href={site.resumePath} download>Download resume</a>
+      </div>
+      <dl class="specs" aria-label="At a glance">
+        {site.specs.map((s) => (
+          <div>
+            <dt>{s.label}</dt>
+            <dd>{s.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <div class="hero-photo">
+      <Image
+        src={hero}
+        alt="Matthew, mud-splattered and grinning at a mountain bike race finish"
+        widths={[600, 936]}
+        sizes="(min-width: 900px) 46vw, 100vw"
+        format="webp"
+        quality={86}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <p class="cap hero-cap">Finish line. Still smiling.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: clamp(2rem, 6vw, 5rem) clamp(3rem, 8vw, 6rem); }
+  .hero-grid { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: 1.15fr 1fr; align-items: start; gap: clamp(2rem, 5vw, 5rem); }
+    .hero-text { padding-top: clamp(1rem, 4vw, 3.5rem); }
+  }
+  .hero-name { font-weight: 500; color: var(--ink-2); margin-bottom: 1.25rem; }
+  .hero-title {
+    font-size: clamp(3.2rem, 9.5vw, 7.4rem);
+    display: grid;
+    margin-bottom: 1.5rem;
+  }
+  .hero-sub { margin-bottom: 2rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* Title-block strip: the one drafting motif on the page. */
+  .specs {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin: 2.5rem 0 0; max-width: 34em;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: var(--paper-2);
+  }
+  .specs > div { padding: 0.7rem 0.9rem; }
+  .specs > div + div { border-left: 1px solid var(--line-strong); }
+  .specs dt { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
+  .specs dd { margin: 0.15rem 0 0; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+  @media (max-width: 480px) {
+    .specs { grid-template-columns: 1fr; }
+    .specs > div + div { border-left: 0; border-top: 1px solid var(--line-strong); }
+  }
+
+  .hero-photo { position: relative; }
+  .hero-photo img {
+    width: 100%;
+    aspect-ratio: 5 / 6;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: var(--radius);
+    box-shadow: 14px 14px 0 0 var(--tan);
+  }
+  .hero-cap { margin-top: 1.4rem; }
+
+  /* One page-load moment: the three lines of the title settle in. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-title span { opacity: 0; transform: translateY(0.35em); animation: settle 700ms cubic-bezier(.2,.7,.2,1) forwards; }
+    .hero-title span:nth-child(2) { animation-delay: 90ms; }
+    .hero-title span:nth-child(3) { animation-delay: 180ms; }
+    @keyframes settle { to { opacity: 1; transform: none; } }
+  }
+</style>

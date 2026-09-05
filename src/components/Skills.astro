@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import VideoLoop from './VideoLoop.astro';
+import posterOnshape from '../assets/img/poster-onshape.jpg';
+import posterEdit from '../assets/img/poster-edit.jpg';
+import fairing from '../assets/img/seatpost-fairing.jpg';
+import carbon from '../assets/img/carbon-bar.jpg';
+import starship from '../assets/img/starship-booster.jpg';
+import manta from '../assets/img/manta-render.jpg';
+import logoOnshape from '../assets/img/logo-onshape.png';
+import logoFusion from '../assets/img/logo-fusion360.png';
+import logoDavinci from '../assets/img/logo-davinci.png';
+import logoJira from '../assets/img/logo-jira.png';
+
+const logos = [
+  { img: logoOnshape, alt: 'Onshape' },
+  { img: logoFusion, alt: 'Autodesk Fusion 360' },
+  { img: logoDavinci, alt: 'DaVinci Resolve', label: 'DaVinci Resolve' },
+  { text: 'Premiere Pro' },
+  { text: 'Bambu Lab' },
+  { text: 'Prusa' },
+  { img: logoJira, alt: 'Jira' },
+];
+---
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h-section">What I can do</h2>
+      <p class="lede">Most of it I learned by needing it: a part that didn't exist, a shot that needed a rig, a printer that stopped mid-job at 2 a.m.</p>
+    </div>
+
+    <ul class="tiles">
+      <li class="tile span-2">
+        <VideoLoop src="/media/video/onshape-cad.mp4" poster={posterOnshape} label="Modeling an aero bar in Onshape" aspect="16/9" />
+        <h3 class="h-small">Design and CAD</h3>
+        <p class="quiet">Onshape and Fusion 360. Parametric models built to be made, not just rendered.</p>
+      </li>
+      <li class="tile tall">
+        <div class="frame"><Image src={starship} alt="Super Heavy booster lifting off, all engines lit, seen from below the launch tower" widths={[500, 800]} sizes="(min-width: 900px) 33vw, 100vw" format="webp" /></div>
+        <h3 class="h-small">Rocketry</h3>
+        <p class="quiet">Two liquid engines designed, a liquid ethanol engine in the works, rockets launched whenever the weather allows.</p>
+        <p class="cap">Photo: SpaceX</p>
+      </li>
+      <li class="tile">
+        <div class="frame"><Image src={fairing} alt="3D-printed textured fairing on a bike seatpost" widths={[500, 800]} sizes="(min-width: 900px) 33vw, 100vw" format="webp" /></div>
+        <h3 class="h-small">3D printing and lab ops</h3>
+        <p class="quiet">Built my first printer at 13 and ran a fleet of eight at Enlisted. Hot ends, belts, boards, firmware, and keeping the queue moving.</p>
+      </li>
+      <li class="tile">
+        <div class="frame"><Image src={carbon} alt="Carbon fiber handlebar prototype" widths={[500, 800]} sizes="(min-width: 900px) 33vw, 100vw" format="webp" /></div>
+        <h3 class="h-small">Fabrication and composites</h3>
+        <p class="quiet">Welding, woodworking, power tools, CNC, and carbon fiber molds and layup.</p>
+      </li>
+      <li class="tile span-2">
+        <VideoLoop src="/media/video/edit-timeline.mp4" poster={posterEdit} label="Editing footage in DaVinci Resolve" aspect="16/9" />
+        <h3 class="h-small">Film and media</h3>
+        <p class="quiet">FPV drones, gimbals, rigs built on the spot. Premiere Pro and DaVinci Resolve for the edit.</p>
+      </li>
+      <li class="tile">
+        <div class="frame frame-dark"><Image src={manta} alt="Manta carbon handlebar render over the word MANTA" widths={[500, 800]} sizes="(min-width: 900px) 33vw, 100vw" format="webp" /></div>
+        <h3 class="h-small">Design for manufacture</h3>
+        <p class="quiet">Manta went from a race-day problem to CAD to a printed 1:1 to a carbon bar I can ride.</p>
+      </li>
+    </ul>
+
+    <div class="tools">
+      <p class="meta">Tools I reach for</p>
+      <div class="marquee" aria-label="Software logos">
+        <ul class="marquee-track">
+          {[...logos, ...logos].map((l, i) => (
+            <li aria-hidden={i >= logos.length ? 'true' : undefined}>
+              {l.img ? (
+                <span class="logo"><Image src={l.img} alt={l.alt ?? ''} height={40} format="png" />{l.label && <span>{l.label}</span>}</span>
+              ) : (
+                <span class="chip">{l.text}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tiles { display: grid; gap: 1.25rem; }
+  @media (min-width: 700px) {
+    .tiles { grid-template-columns: repeat(3, 1fr); gap: 1.5rem 1.25rem; }
+    .span-2 { grid-column: span 2; }
+    .tall { grid-row: span 2; }
+    .tall .frame { height: 100%; }
+    .tall .frame img { height: 100%; aspect-ratio: auto; }
+    .tile { display: grid; grid-template-rows: auto auto 1fr; align-content: start; }
+    .tall { grid-template-rows: 1fr auto auto auto; }
+  }
+  .tile .frame img { aspect-ratio: 4 / 3; }
+  .frame-dark { background: #000; }
+  .frame-dark img { object-fit: contain; }
+  .tile .h-small { margin-top: 0.85rem; }
+  .tile .quiet { margin-top: 0.2rem; }
+
+  .tools { margin-top: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--line); padding-top: 1.25rem; }
+  .tools .meta { margin-bottom: 1rem; }
+  .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track { display: flex; gap: 3rem; align-items: center; width: max-content; animation: slide 32s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track li { display: flex; align-items: center; }
+  .logo { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 600; color: var(--ink-2); }
+  .logo img { height: 38px; width: auto; }
+  .chip { font-weight: 600; font-stretch: 92%; font-size: 1.25rem; color: var(--ink-2); letter-spacing: -0.01em; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { mask-image: none; }
+    .marquee-track { animation: none; width: auto; flex-wrap: wrap; gap: 1.5rem 2.5rem; }
+    .marquee-track li[aria-hidden] { display: none; }
+  }
+</style>

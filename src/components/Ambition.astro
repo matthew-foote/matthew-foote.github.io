@@ -1,0 +1,197 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import starship from '../assets/img/starship-booster.jpg';
+import spacex from '../assets/img/logo-spacex.png';
+
+const posting = [
+  {
+    role: 'Influence flight design so it can be built at rate',
+    me: 'Enlisted taught me to design things that are beautiful and efficient to make. Manta went from CAD to a printed 1:1 to carbon because I designed it around the tools I actually had.',
+  },
+  {
+    role: 'Design tooling that removes assembly error and cuts cycle time',
+    me: 'I have built rigs, cranes, and fixtures out of whatever was in the room. The next step is doing it with tolerances instead of tape.',
+  },
+  {
+    role: 'Develop and inspect weld processes',
+    me: 'Welding coursework and a real love for it. Nowhere near process-level yet, which is exactly why I want to be in the shop.',
+  },
+  {
+    role: 'Move parts from development into high-rate production',
+    me: 'Ran an eight-printer lab on daily deadlines. Rate at small scale, but the habits are the same: keep the machines running, keep the queue clear, fix it before it stops you.',
+  },
+];
+---
+<section class="section" id="ambition">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h-section">Where I'm headed</h2>
+      <p class="lede">I want to build the hardware that gets us off this planet.</p>
+    </div>
+
+    <div class="engine">
+      <div class="viewer-wrap">
+        <div class="viewer" id="engine-viewer" data-model="/models/engine.glb">
+          <canvas aria-label="Interactive 3D model of the liquid ethanol rocket engine"></canvas>
+          <div class="hotspot-layer"></div>
+          <p class="viewer-loading">Loading the engine model</p>
+          <p class="viewer-hint">Drag to rotate, scroll to zoom, tap a label for details.</p>
+        </div>
+        <div class="viewer-controls">
+          <div class="modes" role="group" aria-label="View mode">
+            <button type="button" data-mode="solid" aria-pressed="true">Solid</button>
+            <button type="button" data-mode="wireframe" aria-pressed="false">Wireframe</button>
+            <button type="button" data-mode="xray" aria-pressed="false">X-ray</button>
+            <button type="button" data-mode="slice" aria-pressed="false">Slice</button>
+          </div>
+          <div class="actions">
+            <button type="button" id="explode-btn" aria-pressed="false">Explode</button>
+            <button type="button" id="reset-view-btn">Reset view</button>
+            <a class="open-cad" href={site.links.onshape} rel="noopener">Open in Onshape</a>
+          </div>
+          <div class="slice" id="slice-controls" hidden>
+            <label for="slice-slider">Slice height</label>
+            <input type="range" id="slice-slider" min="0" max="100" value="50" />
+          </div>
+        </div>
+        <div class="part-panel" id="part-panel" hidden>
+          <div>
+            <p class="h-small" id="part-name"></p>
+            <p class="quiet" id="part-desc"></p>
+          </div>
+          <button type="button" id="part-close" aria-label="Close part details">×</button>
+        </div>
+      </div>
+      <div class="engine-text">
+        <p class="engine-title display">Liquid ethanol rocket engine</p>
+        <p class="quiet">In progress. This is the actual model, drag to turn it over.</p>
+        <ul class="engine-parts">
+          <li>Parametric thrust chamber with revision-controlled part names</li>
+          <li>Injector body with an integrated torch igniter</li>
+          <li>Separate LOX and ethanol feed adapters with finish-machined mating surfaces</li>
+          <li>Service flanges and valve interfaces</li>
+          <li>Gimbal cradle and ring stack for future thrust vector control</li>
+        </ul>
+        <p class="meta engine-process">Requirements, then parametric CAD, then assembly review, then hotfire planning.</p>
+        <div class="prose engine-prose">
+          <p>Before my mission I watched a Falcon 9 streak across the sky over Joshua Tree, and I've been chasing that feeling since. When I got home I went straight back to rockets, designed my first two liquid engines, and started this one.</p>
+          <p>At BYU I'm joining the Rocketry Club to help build an engine better than anything I could make alone. What I love most is the seam between design and manufacturing, the part where a drawing has to survive contact with real tools, real materials, and real deadlines. Enlisted showed me that seam, and I want to spend my career on it.</p>
+        </div>
+        <p class="engine-links"><a href={site.links.enginePost} rel="noopener">Read about the build on LinkedIn</a></p>
+      </div>
+    </div>
+
+    <figure class="banner">
+      <Image src={starship} alt="Super Heavy booster lifting off, all engines lit, seen from below the launch tower" widths={[800, 1400]} sizes="100vw" format="webp" />
+      <figcaption class="cap">The goal: build engineer on Starship at Starbase, bridging design and manufacturing so what we build is as robust as it can possibly be. Photo: SpaceX.</figcaption>
+    </figure>
+
+    <div class="posting">
+      <div class="posting-head">
+        <h3 class="h-block">The posting, and where I stand</h3>
+        <p class="quiet">There's a job listing for exactly this role. Here's what it asks for, and an honest read of where I am today.</p>
+      </div>
+      <ul class="posting-rows">
+        {posting.map((p) => (
+          <li>
+            <p class="posting-role">{p.role}</p>
+            <p class="posting-me">{p.me}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="posting-link">
+        <a href={site.links.jobPosting} rel="noopener">
+          <Image src={spacex} alt="SpaceX" height={16} format="png" />
+          <span>Build Engineer, Starship. View the posting</span>
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script type="importmap" is:inline>
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+</script>
+<script type="module" src="/js/engine.js" is:inline></script>
+
+<style>
+  .engine { display: grid; gap: 2rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
+  @media (min-width: 900px) { .engine { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center; } }
+  .viewer-wrap { position: relative; }
+  .viewer {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(70% 70% at 50% 55%, var(--paper-2), transparent 72%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    touch-action: none;
+  }
+  .viewer canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; cursor: grab; }
+  .viewer canvas:active { cursor: grabbing; }
+  .hotspot-layer { position: absolute; inset: 0; pointer-events: none; }
+  .hotspot-layer :global(.hotspot) {
+    position: absolute; transform: translate(-50%, -50%);
+    pointer-events: auto; display: inline-flex; align-items: center; gap: 0.4rem;
+    background: transparent; border: 0; padding: 0; cursor: pointer; transition: opacity 160ms ease;
+  }
+  .hotspot-layer :global(.hotspot .dot) {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--tan); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--tan-deep);
+  }
+  .hotspot-layer :global(.hotspot .tag) {
+    font-size: 0.8rem; font-weight: 600; color: var(--ink);
+    background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 0.15rem 0.5rem; border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .viewer-loading { position: absolute; inset: 0; display: grid; place-content: center; color: var(--muted); margin: 0; }
+  .viewer-hint { position: absolute; left: 0.9rem; bottom: 0.7rem; margin: 0; font-size: 0.8rem; color: var(--muted); pointer-events: none; }
+  .viewer-controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin-top: 0.9rem; }
+  .modes, .actions { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .viewer-controls button, .open-cad {
+    font-size: 0.9rem; padding: 0.4rem 0.8rem; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink); text-decoration: none;
+  }
+  .viewer-controls button[aria-pressed="true"] { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+  .viewer-controls button:hover, .open-cad:hover { border-color: var(--ink); }
+  .open-cad { color: var(--forest); font-weight: 500; }
+  .slice { flex-basis: 100%; display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--ink-2); }
+  .slice input { flex: 1; max-width: 320px; accent-color: var(--forest); }
+  .part-panel {
+    position: absolute; left: 0.9rem; top: 0.9rem; max-width: 22rem;
+    display: flex; gap: 0.75rem; align-items: start;
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 0.85rem 1rem;
+    box-shadow: 0 8px 24px rgba(30,36,31,0.12);
+  }
+  .part-panel .quiet { font-size: 0.92rem; margin-top: 0.2rem; }
+  .part-panel button { border: 0; background: transparent; font-size: 1.3rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 0; }
+  .engine-parts { margin: 1.25rem 0 0.75rem; display: grid; gap: 0.35rem; padding-left: 1.1rem; list-style: disc; color: var(--ink-2); }
+  .engine-parts li::marker { color: var(--tan-deep); }
+  .engine-process { margin-bottom: 0.5rem; }
+  .engine-links { margin-top: 1.25rem; }
+  .engine-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.4rem; }
+  .engine-prose { margin-top: 1.25rem; }
+
+  .banner { margin: 0 0 clamp(3rem, 7vw, 5rem); }
+  .banner img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: 50% 42%; border-radius: var(--radius); }
+  .banner figcaption { max-width: 60ch; margin-top: 0.8rem; }
+
+  .posting-head { max-width: 46em; margin-bottom: 1.5rem; }
+  .posting-head .h-block { margin-bottom: 0.5rem; }
+  .posting-rows { border-top: 1px solid var(--line-strong); }
+  .posting-rows li { display: grid; gap: 0.5rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  @media (min-width: 800px) { .posting-rows li { grid-template-columns: 1fr 1.4fr; gap: 3rem; } }
+  .posting-role { font-weight: 600; }
+  .posting-me { color: var(--ink-2); }
+  .posting-link { margin-top: 1.5rem; }
+  .posting-link a { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--ink); font-weight: 500; }
+  .posting-link a:hover span { text-decoration: underline; text-underline-offset: 0.18em; }
+  .posting-link img { height: 16px; width: auto; opacity: 0.85; }
+</style>

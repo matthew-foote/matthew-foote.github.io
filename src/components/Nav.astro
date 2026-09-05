@@ -1,0 +1,50 @@
+---
+import { site } from '../data/site';
+const links = [
+  ['About', '#about'],
+  ['Skills', '#skills'],
+  ['Experience', '#experience'],
+  ['Ambition', '#ambition'],
+  ['Contact', '#contact'],
+];
+---
+<header class="nav" id="top">
+  <div class="wrap nav-row">
+    <a class="nav-name" href="#top">{site.name}</a>
+    <nav aria-label="Sections">
+      <ul>
+        {links.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--line); }
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    height: 3.75rem;
+  }
+  .nav-name { color: var(--ink); text-decoration: none; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+  .nav-row nav { min-width: 0; flex: 1 1 auto; display: flex; justify-content: flex-end; }
+  nav ul { display: flex; gap: clamp(0.9rem, 2.5vw, 1.75rem); overflow-x: auto; scrollbar-width: none; max-width: 100%; -webkit-overflow-scrolling: touch; }
+  @media (max-width: 480px) { nav a { font-size: 0.88rem; } nav ul { gap: 0.8rem; } }
+  nav ul::-webkit-scrollbar { display: none; }
+  nav a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; white-space: nowrap; padding: 0.25rem 0; border-bottom: 1px solid transparent; }
+  nav a:hover { color: var(--ink); border-bottom-color: var(--tan); }
+</style>
+
+<script>
+  const nav = document.querySelector('.nav');
+  const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

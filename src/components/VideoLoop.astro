@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+interface Props { src: string; poster?: ImageMetadata; label: string; class?: string; aspect?: string; }
+const { src, poster, label, class: cls = '', aspect } = Astro.props;
+const posterSrc = poster ? poster.src : undefined;
+---
+<div class:list={['frame', 'loop', cls]} style={aspect ? `aspect-ratio:${aspect}` : undefined}>
+  <video
+    src={src}
+    poster={posterSrc}
+    autoplay muted loop playsinline preload="metadata"
+    aria-label={label}
+  ></video>
+</div>
+
+<script>
+  // Respect reduced motion: don't autoplay loops, show the poster instead.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('.loop video').forEach((v) => {
+      v.removeAttribute('autoplay');
+      v.pause();
+      v.setAttribute('controls', '');
+    });
+  }
+</script>

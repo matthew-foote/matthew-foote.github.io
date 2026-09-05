@@ -1,0 +1,32 @@
+---
+import '@fontsource-variable/bricolage-grotesque/standard.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+import Nav from '../components/Nav.astro';
+import ogImage from '../assets/img/hero-race.jpg';
+
+const title = `${site.name} — ${site.tagline}`;
+const description = site.subline;
+const ogUrl = new URL(ogImage.src, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f5efe3" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import YouTube from './YouTube.astro';
+import VideoLoop from './VideoLoop.astro';
+import andrew from '../assets/img/andrew-garlock.png';
+import arcPoster from '../assets/img/poster-arcboat.jpg';
+import shoecam from '../assets/img/kizik-shoecam.jpg';
+import k1 from '../assets/img/kizik-frame-1.jpg';
+import k2 from '../assets/img/kizik-frame-2.jpg';
+import k3 from '../assets/img/kizik-frame-3.jpg';
+import k4 from '../assets/img/kizik-frame-4.jpg';
+import k5 from '../assets/img/kizik-frame-5.jpg';
+import gimbalBridge from '../assets/img/gimbal-bridge.jpg';
+import gimbalCreek from '../assets/img/gimbal-creek.jpg';
+import hotelRig from '../assets/img/hotel-rig.jpg';
+import event1 from '../assets/img/event-1.jpg';
+import event2 from '../assets/img/event-2.jpg';
+import event3 from '../assets/img/event-3.jpg';
+import event4 from '../assets/img/event-4.jpg';
+import event5 from '../assets/img/event-5.jpg';
+import event6 from '../assets/img/event-6.jpg';
+import eventCrew from '../assets/img/event-crew.jpg';
+import sTorch from '../assets/img/still-torch.jpg';
+import sHigh from '../assets/img/still-highschool.jpg';
+import sRider from '../assets/img/still-sunset-rider.jpg';
+import sBall from '../assets/img/still-ballpark.jpg';
+import sTorch2 from '../assets/img/still-torch-2.jpg';
+import sSil from '../assets/img/still-silhouette.jpg';
+import sCourt from '../assets/img/still-courtyard.jpg';
+import sEye from '../assets/img/still-eye.jpg';
+import sBack from '../assets/img/still-back.jpg';
+import sCouple from '../assets/img/still-couple.jpg';
+import kStrip from '../assets/img/kizik-strip.jpg';
+import lobbyJib from '../assets/img/stn-lobby-jib.jpg';
+import pWater from '../assets/img/poster-bts-waterfall.jpg';
+import pBridge from '../assets/img/poster-bts-bridge.jpg';
+import pDrone from '../assets/img/poster-bts-drone.jpg';
+import pReel from '../assets/img/poster-north-reel.jpg';
+
+const kizikFrames = [k1, k2, k3, k4, k5];
+const stills = [
+  { img: sTorch, alt: 'Torch-lit western scene, a young man in a wide-brim hat' },
+  { img: sHigh, alt: 'High school building framed by spring blossoms' },
+  { img: sRider, alt: 'Silhouette of a mountain biker against a sunset' },
+  { img: sBall, alt: 'A youth baseball game seen from the outfield grass' },
+  { img: sEye, alt: 'Extreme close-up of an eye' },
+  { img: sCouple, alt: 'A couple laughing under trees' },
+  { img: sSil, alt: 'A figure lit from behind against black' },
+  { img: sCourt, alt: 'Students crossing a courtyard' },
+  { img: sBack, alt: 'Back of a cap and blond hair against a bright sky' },
+  { img: sTorch2, alt: 'Torch-lit western close-up' },
+];
+const events = [
+  { img: eventCrew, alt: 'Three cameramen at an event, smiling' },
+  { img: event2, alt: 'Reviewing a shot on a gimbal rig at golden hour' },
+  { img: event3, alt: 'Kneeling to line up a shot at an outdoor reception' },
+  { img: event1, alt: 'Framing a shot with a mirrorless camera' },
+  { img: event4, alt: 'Shooting a night event' },
+  { img: event5, alt: 'Talking through the audio setup with the sound engineer at a wedding' },
+  { img: event6, alt: 'Walking into the reception with the second shooter, gimbal in hand' },
+];
+const fullRec = `I had the pleasure of working closely with Matt during his time at Enlisted Design as a summer intern. Despite the brief 2 month period supporting video & content creation, Matt's contributions did not go unnoticed. His maturity and professionalism stood out, as did his quality of work — from pre-production and lighting setup, to shooting and editing. Matt exceeded expectations, demonstrating a keen eye for detail and a strong understanding of visual storytelling. I have no doubt he will excel in any endeavor he pursues, and look forward to collaborating with him again very soon.`;
+---
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h-section">Where I've worked</h2>
+      <p class="lede">Three jobs that taught me the same lesson from different ends: the design has to survive the shop, and the shot has to survive the day.</p>
+    </div>
+
+    <!-- Enlisted -->
+    <article class="job">
+      <header class="job-head">
+        <div>
+          <h3 class="h-block">{site.links.enlisted ? <a href={site.links.enlisted} rel="noopener">Enlisted Design</a> : 'Enlisted Design'}</h3>
+          <p class="meta">Content strategy intern. Salt Lake City, May to August 2022.</p>
+        </div>
+      </header>
+      <div class="job-grid">
+        <div class="prose">
+          <p>At 15 I asked Enlisted for a job and got one. I was there to create content and help behind the scenes any way I could, which meant picking up food, fixing 3D printers, running to Home Depot, and absorbing everything I could about how a design studio works.</p>
+          <p>I documented the design process on one of their biggest projects to date, set up and shot interviews with the engineers, and built content for their community gatherings. Between shoots I kept the basement lab's eight printers running for the design team. It's where I learned how to make brand content people trust, and that a product can be beautiful and still be efficient to manufacture.</p>
+        </div>
+        <figure class="rec">
+          <Image src={andrew} alt="Andrew Garlock" width={72} height={72} format="webp" class="rec-photo" />
+          <blockquote>
+            <p>“His maturity and professionalism stood out, as did his quality of work — from pre-production and lighting setup, to shooting and editing. Matt exceeded expectations.”</p>
+          </blockquote>
+          <figcaption>Andrew Garlock, Managing Director, Enlisted</figcaption>
+          <details>
+            <summary>Read the full recommendation</summary>
+            <p>{fullRec}</p>
+          </details>
+        </figure>
+      </div>
+      <div class="job-film">
+        <YouTube id={site.youtube.arcboat} title="Building the boat: the Enlisted design documentary" poster={arcPoster} note="Film coming soon" />
+        <p class="cap">The documentary I shot and cut at Enlisted, following the design team through the build.</p>
+      </div>
+    </article>
+
+    <!-- Phuture Films -->
+    <article class="job">
+      <header class="job-head">
+        <div>
+          <h3 class="h-block">Phuture Films</h3>
+          <p class="meta">Content manager and director of photography. Salt Lake City, September 2022 to April 2024.</p>
+        </div>
+      </header>
+      <div class="job-grid">
+        <div class="prose">
+          <p>As director of photography I built a team around me that made five award-winning films in a short window, winning two national film competitions. I managed content and ran full-production shoots from planning through delivery.</p>
+          <p>Most of my eye comes from this period. A wide range of shoots, back to back, is how you learn to operate a camera and how to direct one.</p>
+        </div>
+        <div>
+          <YouTube id={site.youtube.blender} title="BlenderBottle Strata Twist, a student's perspective" />
+          <p class="cap">BlenderBottle Strata Twist. Student-led advertising that put the brand in front of student athletes.</p>
+        </div>
+      </div>
+      <div class="reel-block">
+        <p class="meta">On set at weddings and events</p>
+        <div class="reel">
+          {events.map((e) => <Image src={e.img} alt={e.alt} widths={[400, 800]} sizes="30vw" format="webp" />)}
+        </div>
+      </div>
+    </article>
+
+    <!-- North Media House -->
+    <article class="job">
+      <header class="job-head">
+        <div>
+          <h3 class="h-block">North Media House</h3>
+          <p class="meta">Founder and CEO. Utah, May to September 2024.</p>
+        </div>
+      </header>
+      <div class="nmh-open">
+        <div class="prose nmh-intro">
+          <p>I started North Media House from nothing: the team, the office, the systems, the clients. We were a design collective making films and ads for ambitious brands, with a focus on mid-sized SaaS companies. In practice, we made videos for anyone who would let us, and got very good at it.</p>
+          <p>In our first two weeks we drove 110,000+ impressions for clients. I ran customer relationships, made the calls on where the company went, and shot most of it myself.</p>
+        </div>
+        <figure class="nmh-reel">
+          <div class="frame reel-frame">
+            <video src="/media/video/north-reel.mp4" poster={pReel.src} autoplay muted loop playsinline preload="metadata" aria-label="North Media House reel"></video>
+            <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Turn sound on">Sound off</button>
+          </div>
+          <figcaption class="cap">The North reel. Seven seconds, and one of the best things we made.</figcaption>
+        </figure>
+      </div>
+
+      <div class="case">
+        <div class="case-lead">
+          <div class="frame"><Image src={shoecam} alt="A Kizik shoe with a camera plate duct-taped to it, next to a Sony FX3 on a magic arm" widths={[600, 1200]} sizes="(min-width: 900px) 40vw, 100vw" format="webp" /></div>
+          <p class="cap">The shoe-cam. When the shot needs a camera on a shoe, you put a camera on a shoe.</p>
+        </div>
+        <div class="case-body">
+          <h4 class="h-block">Case study: Kizik</h4>
+          <p class="quiet">A spec film for a shoe brand, made on our own dime to prove we could.</p>
+          <ol class="steps">
+            <li><strong>Pre-production</strong><p>We messaged a hundred brands, heard back from three, and picked Kizik. Bought the shoes, scouted locations, planned shots, and left the story loose enough to change with the weather.</p></li>
+            <li><strong>Production</strong><p>Lake Powell first, then all of Jackson Hole in one day: gear set up at 4 a.m., home from the Tetons at 4 a.m. A detour to Orlando gave us variety we ended up cutting. Great footage that didn't serve the story.</p></li>
+            <li><strong>Post</strong><p>One of the heaviest edits I've done. A simple concept only works if the execution is precise. Music and sound design licensed through Artlist.</p></li>
+            <li><strong>Color</strong><p>The part I look forward to: matching tones across a sequence so the story moves and you never notice the cut.</p></li>
+          </ol>
+          <p class="meta">Sony FX3, 50 mm anamorphic, DJI Ronin RS3 Pro, Atomos Ninja V, DJI Avata 2.</p>
+          <p class="case-links">
+            <a href={site.links.kizikDeck} rel="noopener">Creative documentation</a>
+            <a href={site.links.kizikPost} rel="noopener">Original post</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="case-film">
+        <YouTube id={site.youtube.kizik} title="Kizik" poster={k1} note="Film coming soon" />
+      </div>
+
+      <div class="reel-block">
+        <p class="meta">Frames</p>
+        <div class="reel">
+          <Image src={kStrip} alt="Four frames from the Kizik film: running a trail, shoes kicked up against the sky, standing on a rock above the trees, sitting on a boulder" widths={[500, 900]} sizes="30vw" format="webp" />
+          {kizikFrames.map((f, i) => <Image src={f} alt={`Kizik film frame ${i + 1}`} widths={[500, 900]} sizes="40vw" format="webp" />)}
+        </div>
+      </div>
+
+      <div class="reel-block">
+        <p class="meta">Behind the scenes</p>
+        <div class="reel">
+          <Image src={gimbalBridge} alt="Operating a gimbal on a footbridge over a creek" widths={[400, 800]} sizes="30vw" format="webp" />
+          <VideoLoop src="/media/video/bts-waterfall.mp4" poster={pWater} label="Handheld gimbal at a waterfall" class="reel-video" />
+          <Image src={hotelRig} alt="Rigging a light and camera in a hotel room, standing on the bed" widths={[400, 800]} sizes="30vw" format="webp" />
+          <VideoLoop src="/media/video/bts-bridge.mp4" poster={pBridge} label="Following talent across the bridge" class="reel-video" />
+          <Image src={gimbalCreek} alt="Balancing a gimbal beside a creek" widths={[400, 800]} sizes="30vw" format="webp" />
+          <VideoLoop src="/media/video/bts-drone.mp4" poster={pDrone} label="FPV drone in hand at sunset" class="reel-video reel-video-wide" />
+          <Image src={lobbyJib} alt="Holding a tripod sideways as a makeshift jib in a hotel lobby" widths={[400, 800]} sizes="30vw" format="webp" />
+        </div>
+      </div>
+
+      <div class="reel-block">
+        <p class="meta">Selected frames</p>
+        <div class="reel">
+          {stills.map((s) => <Image src={s.img} alt={s.alt} widths={[600, 1000]} sizes="45vw" format="webp" />)}
+        </div>
+      </div>
+
+      <div class="films">
+        <div>
+          <YouTube id={site.youtube.sony} title="Sony spec ad" />
+          <p class="cap">Sony spec ad. Written, shot, and cut at North.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .job + .job { margin-top: clamp(4rem, 9vw, 7rem); }
+  .job-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.5rem; }
+  .job-head .meta { margin-top: 0.35rem; }
+  .job-head h3 a { color: inherit; text-decoration: none; }
+  .job-grid { display: grid; gap: 2rem; margin-bottom: 2rem; }
+  @media (min-width: 900px) { .job-grid { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: start; } }
+
+  .rec {
+    margin: 0; padding: 1.5rem;
+    background: var(--paper-2);
+    border-radius: var(--radius);
+    display: grid; gap: 0.9rem;
+  }
+  .rec-photo { width: 72px; height: 72px; border-radius: 50%; }
+  .rec blockquote { margin: 0; font-size: 1.15rem; line-height: 1.45; font-weight: 500; }
+  .rec figcaption { color: var(--muted); font-size: 0.95rem; }
+  .rec details summary { cursor: pointer; color: var(--forest); font-weight: 500; }
+  .rec details p { margin-top: 0.75rem; color: var(--ink-2); font-size: 0.98rem; }
+
+  .job-film { max-width: 880px; }
+
+  .nmh-open { display: grid; gap: 2rem; margin-bottom: 2.5rem; }
+  @media (min-width: 900px) { .nmh-open { grid-template-columns: 1fr 300px; gap: 3.5rem; align-items: start; } }
+  .nmh-reel { margin: 0; max-width: 300px; }
+  .reel-frame { position: relative; aspect-ratio: 9 / 16.5; background: #000; }
+  .reel-frame video { width: 100%; height: 100%; object-fit: cover; }
+  .sound-toggle {
+    position: absolute; right: 0.6rem; bottom: 0.6rem;
+    font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 999px;
+    border: 1px solid rgba(245,239,227,0.5); background: rgba(30,36,31,0.55); color: var(--paper); cursor: pointer;
+    backdrop-filter: blur(6px);
+  }
+  .sound-toggle[aria-pressed="true"] { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .case { display: grid; gap: 2rem; margin-bottom: 2rem; }
+  @media (min-width: 900px) { .case { grid-template-columns: 0.8fr 1.2fr; gap: 3.5rem; align-items: start; } }
+  .case-lead .frame img { aspect-ratio: 3 / 4; }
+  .case-body .h-block { margin-bottom: 0.4rem; }
+  .steps { display: grid; margin: 1.5rem 0 1.25rem; border-top: 1px solid var(--line); counter-reset: step; }
+  .steps li { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .steps li strong { font-weight: 600; }
+  .steps li p { color: var(--ink-2); }
+  @media (max-width: 600px) { .steps li { grid-template-columns: 1fr; gap: 0.25rem; } }
+  .case-links { display: flex; gap: 1.5rem; margin-top: 0.75rem; }
+
+  .case-film { max-width: 880px; margin-bottom: 2.5rem; }
+  .reel-block { margin-bottom: 2rem; }
+  .reel-block .meta { margin-bottom: 0.75rem; }
+  .reel-video { height: clamp(200px, 32vw, 340px); aspect-ratio: 9 / 16; }
+  .reel-video-wide { aspect-ratio: 4 / 3; }
+  .reel-video video { height: 100%; width: 100%; object-fit: cover; }
+
+  .films { display: grid; gap: 1.5rem; margin-top: 2.5rem; max-width: 880px; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.sound-toggle').forEach((btn) => {
+    const video = btn.parentElement?.querySelector('video');
+    if (!video) return;
+    btn.addEventListener('click', () => {
+      const on = video.muted;
+      video.muted = !on;
+      if (on) video.play();
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+      btn.textContent = on ? 'Sound on' : 'Sound off';
+    });
+  });
+</script>

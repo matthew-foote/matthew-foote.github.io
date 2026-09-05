@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+interface Props { id?: string; title: string; poster?: ImageMetadata; note?: string; }
+const { id, title, poster, note = 'Coming soon' } = Astro.props;
+---
+<div class="embed">
+  {id ? (
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    />
+  ) : (
+    <div class="embed-placeholder">
+      {poster && <Image src={poster} alt="" widths={[640, 1280]} sizes="(min-width: 900px) 60vw, 100vw" format="webp" />}
+      <strong>{title}</strong>
+      <span>{note}</span>
+    </div>
+  )}
+</div>
