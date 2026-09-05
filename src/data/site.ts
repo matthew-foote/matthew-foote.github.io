@@ -18,6 +18,7 @@ export const site = {
   // YouTube video IDs (the part after v= in the URL). Leave '' to show a placeholder.
   youtube: {
     nica: 'zYyErTfU5E8',
+    ride: 'nldT8BURsRc', // GoPro chest-mount riding clip
     waterRocket: 'cTAZamTHgY8', // 9th-grade 3D-printed water rocket launch
     sony: '2rqw14xSyM0',
     blender: 'vs8xvEHFLoY',
