@@ -22,7 +22,9 @@ export const site = {
     sony: '2rqw14xSyM0',
     blender: 'vs8xvEHFLoY',
     kizik: '', // upload the Kizik film, paste its ID here
-    arcboat: '', // upload the Arc boat film as Unlisted, paste its ID here
+    arcboat: 'rgaMez2KTzg', // unlisted; cleared for this site only
+    stnNationals: '8e72t_4ASEI', // STN Nationals winner, 24-hour on-demand challenge
+    helicopter: 'itWjvH5ihZg', // Phuture Films example film for UKnighted
   },
   links: {
     jobPosting: 'https://job-boards.greenhouse.io/spacex/jobs/8553649002',
