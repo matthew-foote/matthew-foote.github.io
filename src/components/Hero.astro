@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { site } from '../data/site';
-import hero from '../assets/img/hero-race.jpg';
+import hero from '../assets/img/portrait-bw.jpg';
 ---
 <section class="hero">
   <div class="wrap hero-grid">
@@ -29,15 +29,14 @@ import hero from '../assets/img/hero-race.jpg';
     <div class="hero-photo">
       <Image
         src={hero}
-        alt="Matthew, mud-splattered and grinning at a mountain bike race finish"
-        widths={[600, 936]}
+        alt="Black and white portrait of Matthew in a rain shell and cap"
+        widths={[600, 1080]}
         sizes="(min-width: 900px) 46vw, 100vw"
         format="webp"
         quality={86}
         loading="eager"
         fetchpriority="high"
       />
-      <p class="cap hero-cap">Finish line. Still smiling.</p>
     </div>
   </div>
 </section>
@@ -79,11 +78,10 @@ import hero from '../assets/img/hero-race.jpg';
     width: 100%;
     aspect-ratio: 5 / 6;
     object-fit: cover;
-    object-position: 50% 30%;
+    object-position: 50% 20%;
     border-radius: var(--radius);
     box-shadow: 14px 14px 0 0 var(--tan);
   }
-  .hero-cap { margin-top: 1.4rem; }
 
   /* One page-load moment: the three lines of the title settle in. */
   @media (prefers-reduced-motion: no-preference) {
