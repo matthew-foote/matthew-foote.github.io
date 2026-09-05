@@ -114,8 +114,18 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
           <p>Most of my eye comes from this period. A wide range of shoots, back to back, is how you learn to operate a camera and how to direct one.</p>
         </div>
         <div>
+          <YouTube id={site.youtube.stnNationals} title="STN Nationals winner: 24-hour on-demand challenge" />
+          <p class="cap">The film that won the Student Television Network national 24-hour challenge. Written, shot, and cut in one day.</p>
+        </div>
+      </div>
+      <div class="films films-2">
+        <div>
           <YouTube id={site.youtube.blender} title="BlenderBottle Strata Twist, a student's perspective" />
           <p class="cap">BlenderBottle Strata Twist. Student-led advertising that put the brand in front of student athletes.</p>
+        </div>
+        <div>
+          <YouTube id={site.youtube.helicopter} title="Red helicopter: example film for UKnighted" />
+          <p class="cap">Red helicopter. An example film for UKnighted.</p>
         </div>
       </div>
       <div class="reel-block">
@@ -265,6 +275,8 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .reel-video video { height: 100%; width: 100%; object-fit: cover; }
 
   .films { display: grid; gap: 1.5rem; margin-top: 2.5rem; max-width: 880px; }
+  .films-2 { max-width: none; margin-top: 0; margin-bottom: 2rem; }
+  @media (min-width: 700px) { .films-2 { grid-template-columns: 1fr 1fr; } }
 </style>
 
 <script>
