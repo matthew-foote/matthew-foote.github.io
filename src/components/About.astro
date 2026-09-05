@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { site } from '../data/site';
 import YouTube from './YouTube.astro';
-import portrait from '../assets/img/portrait-bw.jpg';
+import portrait from '../assets/img/hero-race.jpg';
 import trail from '../assets/img/trail-selfie.jpg';
 import fpv from '../assets/img/fpv-powell.jpg';
 import run from '../assets/img/run-50mi.jpg';
@@ -40,7 +40,8 @@ const timeline = [
 
     <div class="intro">
       <div class="intro-photo">
-        <Image src={portrait} alt="Black and white portrait of Matthew in a rain shell and cap" widths={[400, 800]} sizes="(min-width: 900px) 30vw, 60vw" format="webp" />
+        <Image src={portrait} alt="Matthew, mud-splattered and grinning at a mountain bike race finish" widths={[400, 800]} sizes="(min-width: 900px) 30vw, 60vw" format="webp" />
+        <p class="cap">Finish line. Still smiling.</p>
       </div>
       <div class="intro-text prose">
         <p class="lede">Hi, I'm Matthew Foote, a mechanical engineering student at BYU. I love designing and building hardware, rocketry, and anything engineering. In my free time I race bikes, fly FPV drones, run long distances, and make videos documenting all of it.</p>
@@ -91,7 +92,7 @@ const timeline = [
 <style>
   .intro { display: grid; gap: 2rem; margin-bottom: 3rem; }
   @media (min-width: 900px) { .intro { grid-template-columns: 0.55fr 1fr; gap: 3.5rem; align-items: center; } }
-  .intro-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 15%; border-radius: var(--radius); filter: contrast(1.02); }
+  .intro-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius); }
   .intro-text .lede { margin-bottom: 1.25rem; }
 
   .film { margin-bottom: 3rem; }
