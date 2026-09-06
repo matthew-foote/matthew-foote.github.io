@@ -128,12 +128,13 @@ section.section[id] { scroll-margin-top: 4.5rem; }
 .is-collapsed > .wrap > .section-head { margin-bottom: 0; }
 .job.is-collapsed .job-head { margin-bottom: 0; }
 .job.is-collapsed + .job { margin-top: 2.25rem !important; }
-.section-body, .job-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 360ms cubic-bezier(.2,.7,.2,1); }
-.section-body > .fold-inner, .job-body > .fold-inner { min-height: 0; overflow: hidden; }
+.section-body, .job-body { display: grid; grid-template-rows: 1fr; grid-template-columns: minmax(0, 1fr); transition: grid-template-rows 360ms cubic-bezier(.2,.7,.2,1); }
+.section-body > .fold-inner, .job-body > .fold-inner { min-height: 0; min-width: 0; overflow: hidden; }
 .is-collapsed > .section-body, .job.is-collapsed > .job-body { grid-template-rows: 0fr; }
 .foldable:not(.is-collapsed) > .section-body > .fold-inner, .job.foldable:not(.is-collapsed) > .job-body > .fold-inner { overflow: visible; }
 .nav-all { font: inherit; font-size: 0.9rem; color: var(--forest); background: none; border: 0; padding: 0.25rem 0; cursor: pointer; white-space: nowrap; border-bottom: 1px solid transparent; }
 .nav-all:hover { border-bottom-color: var(--forest); }
+@media (max-width: 600px) { .nav-all { display: none; } }
 @media (prefers-reduced-motion: reduce) { .section-body, .job-body, .fold-toggle .chev { transition: none; } }
 
 /* ---------- Media ---------- */
