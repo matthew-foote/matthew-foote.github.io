@@ -1,13 +1,14 @@
 import { RocketViewer } from "./viewer.js";
 
 // Per-model setup: how to stand it up, and which parts get labels.
+// anchor: where on the part the label sits, 0 = bottom, 1 = top. Concentric parts get different heights.
 const CONFIGS = {
   "/models/pathfinder.glb": {
     rotation: [0, 0, -Math.PI / 2],
     parts: {
-      "PATHFINDER Block A injector": { label: "Injector", desc: "303/304 stainless injector plate. Block A baseline, not yet qualified." },
-      "PATHFINDER Block A copper liner": { label: "Copper liner", desc: "C145 copper liner: chamber, throat, and nozzle contour in one piece." },
-      "PATHFINDER Block A jacket": { label: "Jacket", desc: "304 stainless jacket around the liner." },
+      "PATHFINDER Block A injector": { label: "Injector", anchor: 0.5, desc: "303/304 stainless injector plate. Block A baseline, not yet qualified." },
+      "PATHFINDER Block A copper liner": { label: "Copper liner", anchor: 0.15, desc: "C145 copper liner: chamber, throat, and nozzle contour in one piece." },
+      "PATHFINDER Block A jacket": { label: "Jacket", anchor: 0.55, desc: "304 stainless jacket around the liner." },
     },
     hotspots: ["PATHFINDER Block A injector", "PATHFINDER Block A copper liner", "PATHFINDER Block A jacket"],
   },
