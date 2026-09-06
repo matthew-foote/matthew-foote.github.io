@@ -28,5 +28,59 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
     <main>
       <slot />
     </main>
+    <script is:inline>
+      // Collapsible sections and jobs. Everything starts open; the toggles just let a reader fold
+      // what they've already seen. Navigating to a folded section unfolds it.
+      (() => {
+        const addToggle = (target, head, label) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fold-toggle';
+          btn.setAttribute('aria-expanded', 'true');
+          btn.setAttribute('aria-label', 'Collapse ' + label);
+          btn.textContent = 'Collapse';
+          btn.addEventListener('click', () => {
+            const collapsed = target.classList.toggle('is-collapsed');
+            btn.textContent = collapsed ? 'Expand' : 'Collapse';
+            btn.setAttribute('aria-expanded', String(!collapsed));
+            btn.setAttribute('aria-label', (collapsed ? 'Expand ' : 'Collapse ') + label);
+          });
+          head.appendChild(btn);
+          target._fold = btn;
+        };
+        document.querySelectorAll('section.section[id]').forEach((sec) => {
+          const wrapEl = sec.querySelector(':scope > .wrap');
+          const head = wrapEl && wrapEl.querySelector(':scope > .section-head');
+          if (!head) return;
+          const body = document.createElement('div');
+          body.className = 'section-body';
+          let n = head.nextSibling;
+          while (n) { const next = n.nextSibling; body.appendChild(n); n = next; }
+          wrapEl.appendChild(body);
+          // move body out to be a direct child of the section so .is-collapsed > .section-body works
+          sec.appendChild(body);
+          body.classList.add('wrap');
+          addToggle(sec, head, (head.querySelector('h2') || {}).textContent || sec.id);
+        });
+        document.querySelectorAll('article.job').forEach((job) => {
+          const head = job.querySelector(':scope > .job-head');
+          if (!head) return;
+          const body = document.createElement('div');
+          body.className = 'job-body';
+          let n = head.nextSibling;
+          while (n) { const next = n.nextSibling; body.appendChild(n); n = next; }
+          job.appendChild(body);
+          addToggle(job, head, (head.querySelector('h3') || {}).textContent || 'this job');
+        });
+        const unfold = () => {
+          const id = location.hash.slice(1);
+          if (!id) return;
+          const sec = document.getElementById(id);
+          if (sec && sec.classList.contains('is-collapsed')) sec._fold.click();
+        };
+        window.addEventListener('hashchange', unfold);
+        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(unfold, 0)));
+      })();
+    </script>
   </body>
 </html>
