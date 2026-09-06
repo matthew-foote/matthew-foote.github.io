@@ -23,6 +23,7 @@ export const site = {
     sony: '2rqw14xSyM0',
     blender: 'vs8xvEHFLoY', // BlenderBottle spec ad
     redbull: '_UdIC60Pbos', // Red Bull spec ad
+    poc: '7G6Phr2T33Y', // POC spec ad
     kizik: '', // upload the Kizik film, paste its ID here
     arcboat: 'rgaMez2KTzg', // unlisted; cleared for this site only
     stnNationals: '8e72t_4ASEI', // STN Nationals winner, 24-hour on-demand challenge
