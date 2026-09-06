@@ -21,7 +21,8 @@ export const site = {
     ride: 'nldT8BURsRc', // GoPro chest-mount riding clip
     waterRocket: 'cTAZamTHgY8', // 9th-grade 3D-printed water rocket launch
     sony: '2rqw14xSyM0',
-    blender: 'vs8xvEHFLoY',
+    blender: 'vs8xvEHFLoY', // BlenderBottle spec ad
+    redbull: '_UdIC60Pbos', // Red Bull spec ad
     kizik: '', // upload the Kizik film, paste its ID here
     arcboat: 'rgaMez2KTzg', // unlisted; cleared for this site only
     stnNationals: '8e72t_4ASEI', // STN Nationals winner, 24-hour on-demand challenge
