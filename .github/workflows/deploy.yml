@@ -23,6 +23,14 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - name: Render resume/index.html to the PDF the site links to
+        run: |
+          mkdir -p public/resume
+          google-chrome --headless=new --disable-gpu --no-sandbox \
+            --no-pdf-header-footer \
+            --print-to-pdf="$PWD/public/resume/Matthew_Foote_Resume.pdf" \
+            "file://$PWD/resume/index.html"
+          ls -la public/resume
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
