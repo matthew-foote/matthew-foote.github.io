@@ -135,6 +135,7 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
               const name = (found.querySelector('.section-head h2') || {}).textContent || '';
               float.querySelector('.fold-float-label').textContent = 'Collapse ' + name;
               float.setAttribute('aria-label', 'Collapse ' + name);
+              float.title = 'Collapse ' + name;
             }
             float.classList.toggle('is-visible', !!found);
           }
