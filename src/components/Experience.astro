@@ -5,6 +5,7 @@ import YouTube from './YouTube.astro';
 import VideoLoop from './VideoLoop.astro';
 import andrew from '../assets/img/andrew-garlock.png';
 import arcPoster from '../assets/img/poster-arcboat.jpg';
+import lab from '../assets/img/enlisted-lab.jpg';
 import shoecam from '../assets/img/kizik-shoecam.jpg';
 import k1 from '../assets/img/kizik-frame-1.jpg';
 import k2 from '../assets/img/kizik-frame-2.jpg';
@@ -96,9 +97,15 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
           </details>
         </figure>
       </div>
-      <div class="job-film">
-        <YouTube id={site.youtube.arcboat} title="Building the boat: the Enlisted design documentary" poster={arcPoster} note="Film coming soon" />
-        <p class="cap">The documentary I shot and cut at Enlisted, following the design team through the build.</p>
+      <div class="job-media">
+        <div>
+          <YouTube id={site.youtube.arcboat} title="Building the boat: the Enlisted design documentary" poster={arcPoster} note="Film coming soon" />
+          <p class="cap">The documentary I shot and cut at Enlisted, following the design team through the build.</p>
+        </div>
+        <div>
+          <div class="frame lab-photo"><Image src={lab} alt="The basement lab at Enlisted: 3D printers running on the bench, camera gear laid out on the floor" widths={[500, 1000]} sizes="(min-width: 900px) 36vw, 100vw" format="webp" /></div>
+          <p class="cap">The basement lab I ran. Printers on the bench, camera gear on the floor, both mine to keep working.</p>
+        </div>
       </div>
     </article>
 
@@ -247,7 +254,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .rec details summary { cursor: pointer; color: var(--forest); font-weight: 500; }
   .rec details p { margin-top: 0.75rem; color: var(--ink-2); font-size: 0.98rem; }
 
-  .job-film { max-width: 880px; }
+  .job-media { display: grid; gap: 1.5rem; }
+  @media (min-width: 900px) { .job-media { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+  .lab-photo img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
+  @media (min-width: 900px) { .lab-photo img { aspect-ratio: auto; height: 100%; } .job-media > div { display: grid; grid-template-rows: 1fr auto; } .job-media .lab-photo { height: 100%; } }
 
   .nmh-open { display: grid; gap: 2rem; margin-bottom: 2.5rem; }
   @media (min-width: 900px) { .nmh-open { grid-template-columns: 1fr 300px; gap: 3.5rem; align-items: start; } }
