@@ -104,8 +104,7 @@ button { font: inherit; }
 .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
 /* ---------- Collapsible sections ---------- */
-/* Main sections and job entries start folded. The whole header is the handle; the pill is the hint. */
-.fold > .wrap > .section-head ~ *, .fold > .job-head ~ * { display: none; } /* pre-JS state, no flash */
+/* Everything starts open. The whole header is the handle; the pill is the hint. */
 section.section[id] { scroll-margin-top: 4.5rem; }
 .job { scroll-margin-top: 4.5rem; }
 .section-head, .job-head { position: relative; }
