@@ -6,10 +6,12 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 const PART_INFO = {
   THRUST_CHAMBER_REVA_PARAMETRIC: {
     label: "Thrust chamber",
+    anchor: 0.35,
     desc: "Parametric chamber geometry — primary combustion volume and throat contour for the ethanol / LOX cycle.",
   },
   INJECTOR_BODY_WITH_INTEGRATED_TORCH_REVA: {
     label: "Injector + torch",
+    anchor: 0.6,
     desc: "Injector body with integrated torch igniter path. Core of mixture distribution and light-off.",
   },
   LOX_INLET_ADAPTER_REVA__FINISH_MACHINE_INTERFACE: {
@@ -34,10 +36,12 @@ const PART_INFO = {
   },
   GIMBAL_ENGINE_CRADLE_REVA__SEPARATE_MODULE_NOT_LOAD_RATED: {
     label: "Gimbal cradle",
+    anchor: 0.2,
     desc: "Engine cradle module for thrust-vector architecture (separate module; not load-rated in this revision).",
   },
   GIMBAL_FIXED_OUTER_RING_REVA__AIRFRAME_INTERFACE_NOT_RELEASED: {
     label: "Gimbal outer ring",
+    anchor: 0.8,
     desc: "Fixed outer ring — airframe interface envelope (not released).",
   },
   GIMBAL_INTERMEDIATE_CLOSED_RING_REVA__NOT_LOAD_RATED: {
@@ -475,19 +479,39 @@ export class RocketViewer {
       layer.appendChild(btn);
       this.hotspotEls.push(btn);
       entry.hotspotEl = btn;
+      // Where on the part the label sits: 0 = bottom of the part, 1 = top. Concentric parts get
+      // different heights so their labels don't pile up on the shared axis.
+      entry.anchorFrac = info.anchor ?? 0.5;
+      // A part is usually split into several meshes (one per material); anchor on all of them.
+      entry.group = this.meshEntries.filter((o) => o.name === entry.name);
     });
   }
 
   updateHotspotPositions() {
     if (!this.showHotspots || !this.hotspotEls.length) return;
     const rect = this.root.getBoundingClientRect();
+    const box = new THREE.Box3();
+    const placed = [];
     this.meshEntries.forEach((e) => {
       if (!e.hotspotEl) return;
-      const v = e.mesh.getWorldPosition(new THREE.Vector3());
+      // Anchor on the part's own bounding box (in world space), not the node origin, which every
+      // part of a Part Studio export shares.
+      box.makeEmpty();
+      (e.group || [e]).forEach((o) => box.expandByObject(o.mesh));
+      const v = new THREE.Vector3(
+        (box.min.x + box.max.x) / 2,
+        box.min.y + (box.max.y - box.min.y) * e.anchorFrac,
+        (box.min.z + box.max.z) / 2
+      );
       v.project(this.camera);
-      const x = (v.x * 0.5 + 0.5) * rect.width;
-      const y = (-v.y * 0.5 + 0.5) * rect.height;
+      let x = (v.x * 0.5 + 0.5) * rect.width;
+      let y = (-v.y * 0.5 + 0.5) * rect.height;
       const behind = v.z > 1 || v.z < -1;
+      // Nudge apart any labels that would overlap.
+      for (const p of placed) {
+        if (Math.abs(p.x - x) < 150 && Math.abs(p.y - y) < 30) y = p.y + 30;
+      }
+      placed.push({ x, y });
       e.hotspotEl.style.left = `${x}px`;
       e.hotspotEl.style.top = `${y}px`;
       e.hotspotEl.style.opacity = behind ? "0" : "1";
