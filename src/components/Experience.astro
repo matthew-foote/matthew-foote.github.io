@@ -40,6 +40,10 @@ import pDrone from '../assets/img/poster-bts-drone.jpg';
 import pReel from '../assets/img/poster-north-reel.jpg';
 
 const kizikFrames = [k1, k2, k3, k4, k5];
+const kizikAll = [
+  { img: kStrip, alt: 'Four frames from the Kizik film: running a trail, shoes kicked up against the sky, standing on a rock above the trees, sitting on a boulder' },
+  ...kizikFrames.map((f, i) => ({ img: f, alt: `Kizik film frame ${i + 1}` })),
+];
 const stills = [
   { img: sTorch, alt: 'Torch-lit western scene, a young man in a wide-brim hat' },
   { img: sHigh, alt: 'High school building framed by spring blossoms' },
@@ -191,9 +195,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
 
       <div class="reel-block">
         <p class="meta">Frames</p>
-        <div class="reel">
-          <Image src={kStrip} alt="Four frames from the Kizik film: running a trail, shoes kicked up against the sky, standing on a rock above the trees, sitting on a boulder" widths={[500, 900]} sizes="30vw" format="webp" />
-          {kizikFrames.map((f, i) => <Image src={f} alt={`Kizik film frame ${i + 1}`} widths={[500, 900]} sizes="40vw" format="webp" />)}
+        <div class="marquee-reel" aria-label="Frames from the Kizik film">
+          <div class="marquee-reel-track">
+            {[...kizikAll, ...kizikAll].map((f, i) => <Image src={f.img} alt={i < kizikAll.length ? f.alt : ''} aria-hidden={i >= kizikAll.length ? 'true' : undefined} widths={[500, 900]} sizes="40vw" format="webp" />)}
+          </div>
         </div>
       </div>
 
