@@ -117,6 +117,16 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
           </div>
         </div>
       </div>
+      <div class="job-film-row">
+        <div class="job-film-text">
+          <p class="job-film-lede">A tutorial I recorded for the studio. I was fifteen.</p>
+          <p class="quiet">Color grading and audio, walked through step by step so the design team could finish their own edits without me in the room.</p>
+        </div>
+        <div>
+          <YouTube id={site.youtube.enlistedTutorial} title="Color grading and audio tutorial, recorded at Enlisted" />
+          <p class="cap">Color grading and audio tutorial, Enlisted, summer 2022.</p>
+        </div>
+      </div>
     </article>
 
     <!-- Phuture Films -->
@@ -283,6 +293,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   @media (min-width: 700px) and (max-width: 899px) { .job-media-side { grid-template-columns: 1fr 1fr; } }
   .lab-photo img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
   @media (min-width: 900px) { .job-media { grid-template-columns: 2fr 1fr; align-items: start; } }
+  .job-film-row { display: grid; gap: 1.5rem; margin-top: 2.5rem; align-items: center; }
+  @media (min-width: 900px) { .job-film-row { grid-template-columns: 1fr 1.15fr; gap: 3.5rem; } }
+  .job-film-lede { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.75rem; }
+  .job-film-text .quiet { font-size: 1.05rem; }
 
   .nmh-open { display: grid; gap: 2rem; margin-bottom: 2.5rem; }
   @media (min-width: 900px) { .nmh-open { grid-template-columns: 1fr 300px; gap: 3.5rem; align-items: start; } }
