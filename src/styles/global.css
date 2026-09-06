@@ -88,7 +88,7 @@ button { font: inherit; }
 /* ---------- Layout ---------- */
 .wrap { width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; }
 .section { padding-block: var(--section); }
-.section + .section { padding-top: 0; }
+.section ~ .section { padding-top: 0; }
 .section-head {
   display: grid;
   gap: 1rem;
@@ -104,18 +104,37 @@ button { font: inherit; }
 .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
 /* ---------- Collapsible sections ---------- */
-.section-head { position: relative; }
+/* Main sections and job entries start folded. The whole header is the handle; the pill is the hint. */
+.fold > .wrap > .section-head ~ *, .fold > .job-head ~ * { display: none; } /* pre-JS state, no flash */
+section.section[id] { scroll-margin-top: 4.5rem; }
+.job { scroll-margin-top: 4.5rem; }
+.section-head, .job-head { position: relative; }
+.foldable > .wrap > .section-head, .foldable > .job-head { cursor: pointer; }
+.foldable > .wrap > .section-head:hover .h-section, .foldable > .job-head:hover .h-block { color: var(--forest); }
 .fold-toggle {
-  font: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.01em;
-  color: var(--ink-2); background: var(--paper); border: 1px solid var(--line-strong);
-  border-radius: 999px; padding: 0.25rem 0.7rem; cursor: pointer; line-height: 1.2;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font: inherit; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;
+  color: var(--ink); background: var(--paper); border: 1px solid var(--line-strong);
+  border-radius: 999px; padding: 0.35rem 0.85rem 0.35rem 0.7rem; cursor: pointer; line-height: 1.2;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
 }
-.fold-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.fold-toggle .chev { width: 0.9em; height: 0.9em; transition: transform 220ms ease; }
+.fold-toggle:hover, .foldable > .wrap > .section-head:hover .fold-toggle, .foldable > .job-head:hover .fold-toggle { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+.is-collapsed .fold-toggle .chev { transform: rotate(0deg); }
+.foldable:not(.is-collapsed) > .wrap > .section-head .fold-toggle .chev, .job.foldable:not(.is-collapsed) > .job-head .fold-toggle .chev { transform: rotate(180deg); }
 .section-head > .fold-toggle { position: absolute; right: 0; top: 0; transform: translateY(-50%); }
 .job-head > .fold-toggle { flex: none; }
+.section.is-collapsed { padding-bottom: clamp(1.5rem, 3vw, 2.25rem); }
 .is-collapsed > .wrap > .section-head { margin-bottom: 0; }
-.is-collapsed > .section-body, .job.is-collapsed > .job-body { display: none; }
 .job.is-collapsed .job-head { margin-bottom: 0; }
+.job.is-collapsed + .job { margin-top: 2.25rem !important; }
+.section-body, .job-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 360ms cubic-bezier(.2,.7,.2,1); }
+.section-body > .fold-inner, .job-body > .fold-inner { min-height: 0; overflow: hidden; }
+.is-collapsed > .section-body, .job.is-collapsed > .job-body { grid-template-rows: 0fr; }
+.foldable:not(.is-collapsed) > .section-body > .fold-inner, .job.foldable:not(.is-collapsed) > .job-body > .fold-inner { overflow: visible; }
+.nav-all { font: inherit; font-size: 0.9rem; color: var(--forest); background: none; border: 0; padding: 0.25rem 0; cursor: pointer; white-space: nowrap; border-bottom: 1px solid transparent; }
+.nav-all:hover { border-bottom-color: var(--forest); }
+@media (prefers-reduced-motion: reduce) { .section-body, .job-body, .fold-toggle .chev { transition: none; } }
 
 /* ---------- Media ---------- */
 .frame {
