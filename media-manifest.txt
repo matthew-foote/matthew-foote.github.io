@@ -5,3 +5,4 @@
 
 https://h.uguu.se/dplilYLE.jpg | src/assets/img/starship-pad.jpg
 https://h.uguu.se/ehYfNyAp.mp4 | public/media/video/skate-loop.mp4
+https://d.uguu.se/ZWVPHhkQ.jpg | src/assets/img/beau-oyler.jpg
