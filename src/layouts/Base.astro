@@ -115,6 +115,46 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
         document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(openThenClean, 0)));
         if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 
+        // Floating "Collapse" pill: fades in at the side once you've scrolled past an open
+        // section's header, so the section can be folded from anywhere inside it.
+        const float = document.createElement('button');
+        float.type = 'button'; float.className = 'fold-float'; float.hidden = false;
+        float.innerHTML = '<span class="fold-float-label"></span>' + CHEV;
+        document.body.appendChild(float);
+        let floatTarget = null;
+        const updateFloat = () => {
+          const vh = window.innerHeight;
+          let found = null;
+          for (const sec of sections) {
+            if (!isOpen(sec)) continue;
+            const head = sec.querySelector('.section-head');
+            const hr = head.getBoundingClientRect();
+            const sr = sec.getBoundingClientRect();
+            if (hr.bottom < 56 && sr.bottom > vh * 0.35) { found = sec; break; }
+          }
+          if (found !== floatTarget) {
+            floatTarget = found;
+            if (found) {
+              const name = (found.querySelector('.section-head h2') || {}).textContent || '';
+              float.querySelector('.fold-float-label').textContent = 'Collapse ' + name;
+              float.setAttribute('aria-label', 'Collapse ' + name);
+            }
+            float.classList.toggle('is-visible', !!found);
+          }
+        };
+        float.addEventListener('click', () => {
+          if (!floatTarget) return;
+          const sec = floatTarget;
+          setOpen(sec, false);
+          float.classList.remove('is-visible'); floatTarget = null;
+          requestAnimationFrame(() => reveal(sec));
+        });
+        let ticking = false;
+        const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; updateFloat(); }); };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        document.addEventListener('click', () => setTimeout(updateFloat, 400));
+
         // Expand all / collapse all, in the nav.
         const navList = document.querySelector('.nav nav ul');
         if (navList) {
