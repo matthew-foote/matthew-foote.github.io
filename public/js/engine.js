@@ -1,21 +1,41 @@
 import { RocketViewer } from "./viewer.js";
 
-const root = document.getElementById("engine-viewer");
-if (root) {
+// Per-model setup: how to stand it up, and which parts get labels.
+const CONFIGS = {
+  "/models/pathfinder.glb": {
+    rotation: [0, 0, -Math.PI / 2],
+    parts: {
+      "PATHFINDER Block A injector": { label: "Injector", desc: "303/304 stainless injector plate. Block A baseline, not yet qualified." },
+      "PATHFINDER Block A copper liner": { label: "Copper liner", desc: "C145 copper liner: chamber, throat, and nozzle contour in one piece." },
+      "PATHFINDER Block A jacket": { label: "Jacket", desc: "304 stainless jacket around the liner." },
+    },
+    hotspots: ["PATHFINDER Block A injector", "PATHFINDER Block A copper liner", "PATHFINDER Block A jacket"],
+  },
+  "/models/engine.glb": { rotation: [-Math.PI / 2, 0, 0] },
+};
+
+document.querySelectorAll(".viewer-wrap").forEach((wrap) => {
+  const root = wrap.querySelector(".viewer[data-model]");
+  if (!root) return;
+  const model = root.dataset.model;
+  const cfg = CONFIGS[model] || {};
   const canvas = root.querySelector("canvas");
   const layer = root.querySelector(".hotspot-layer");
   const loading = root.querySelector(".viewer-loading");
-  const panel = document.getElementById("part-panel");
-  const partName = document.getElementById("part-name");
-  const partDesc = document.getElementById("part-desc");
-  const modes = document.querySelectorAll("[data-mode]");
-  const sliceWrap = document.getElementById("slice-controls");
-  const slice = document.getElementById("slice-slider");
-  const explodeBtn = document.getElementById("explode-btn");
-  const resetBtn = document.getElementById("reset-view-btn");
+  const panel = wrap.querySelector(".part-panel");
+  const partName = wrap.querySelector(".part-name");
+  const partDesc = wrap.querySelector(".part-desc");
+  const modes = wrap.querySelectorAll("[data-mode]");
+  const sliceWrap = wrap.querySelector(".slice");
+  const slice = wrap.querySelector(".slice-slider");
+  const explodeBtn = wrap.querySelector(".explode-btn");
+  const resetBtn = wrap.querySelector(".reset-view-btn");
 
   const viewer = new RocketViewer(canvas, {
     hotspotLayer: layer,
+    parts: cfg.parts,
+    hotspots: cfg.hotspots,
+    rotation: cfg.rotation,
     onPartSelect: ({ label, desc }) => {
       panel.hidden = false;
       partName.textContent = label;
@@ -42,7 +62,7 @@ if (root) {
     explodeBtn?.setAttribute("aria-pressed", "false");
     viewer.setExplode(false);
   });
-  document.getElementById("part-close")?.addEventListener("click", () => {
+  wrap.querySelector(".part-close")?.addEventListener("click", () => {
     panel.hidden = true;
   });
 
@@ -55,7 +75,7 @@ if (root) {
   (async () => {
     try {
       viewer.resize();
-      await viewer.load(root.dataset.model);
+      await viewer.load(model);
       viewer.setMode("wireframe");
       loading.hidden = true;
       viewer.start();
@@ -68,4 +88,4 @@ if (root) {
       loading.textContent = "The model could not load. Open it in Onshape instead.";
     }
   })();
-}
+});
