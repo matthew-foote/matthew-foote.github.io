@@ -12,6 +12,7 @@ import beau from '../assets/img/beau-oyler.jpg';
 import fairing from '../assets/img/seatpost-fairing.jpg';
 import carbon from '../assets/img/carbon-bar.jpg';
 import suit from '../assets/img/portrait-suit.jpg';
+import fhe from '../assets/img/unisan-fhe.jpg';
 import rocket9 from '../assets/img/rocket-9th-grade.jpg';
 import crew from '../assets/img/event-crew.jpg';
 
@@ -28,7 +29,7 @@ const timeline = [
   { age: '15', text: 'Made a LinkedIn profile, went to a business conference, and wrote a post about why I wanted to work at Enlisted, a studio building the first production electric boat designed from the ground up. Interviewed the next day and got the internship. Fixed their printers, ran to Home Depot, and filmed the engineers at work.', img: beau, alt: 'Matthew with Beau Oyler, founder and CEO of Enlisted Design, in the studio', cap: 'With Beau Oyler, founder and CEO of Enlisted.' },
   { age: '16–17', text: 'Bought my first real camera. Became director of photography at Phuture Films and built a team around me that made five award-winning films in a short window, winning two national competitions. Shot weddings and brand work, and built cranes and rigs out of whatever was around.', img: crew, alt: 'Three cameramen at an event, smiling' },
   { age: '18', text: 'Designed and printed aero fairings to gain an edge on the race course. Founded North Media House and ran it through the summer. Two weeks before I left on my mission, I ran fifty miles through the night.', img: fairing, alt: '3D-printed textured fairing fitted to a bike seatpost' },
-  { age: '18–20', text: 'Two years of full-time missionary service in the Philippines San Pablo Mission, in Tagalog. Long weeks, new places, and a lot of learning how to work with people.', img: suit, alt: 'Portrait in a dark suit and tie under green trees' },
+  { age: '18–20', text: 'Two years of full-time missionary service in the Philippines San Pablo Mission, in Tagalog. Long weeks, new places, and a lot of learning how to work with people.', img: fhe, alt: 'A packed room of Unisan Branch members waving and making faces for a selfie at family home evening', cap: 'Family home evening with the Unisan Branch. Everyone came.', img2: suit, alt2: 'Portrait in a dark suit and tie under green trees' },
   { age: 'Now', text: 'Home since August, and a first-year mechanical engineering student at BYU. I came back to rockets: designed my first two liquid engines, and am now building a liquid ethanol engine, laying up carbon fiber, and refining Manta, the handlebar I designed from a problem I hit while racing.', img: carbon, alt: 'Carbon fiber handlebar prototype on concrete' },
 ];
 ---
@@ -94,6 +95,11 @@ const timeline = [
                   <Image src={t.img} alt={t.alt} widths={[500, 1000]} sizes="(min-width: 900px) 34vw, 100vw" format="webp" />
                 </div>
                 {t.cap && <p class="cap">{t.cap}</p>}
+                {t.img2 && (
+                  <div class="frame tl-img tl-img-2">
+                    <Image src={t.img2} alt={t.alt2} widths={[500, 1000]} sizes="(min-width: 900px) 34vw, 100vw" format="webp" />
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -130,5 +136,6 @@ const timeline = [
   .tl-body { display: grid; gap: 1.25rem; }
   @media (min-width: 900px) { .tl-body { grid-template-columns: 1fr 0.8fr; align-items: start; gap: 2.5rem; } }
   .tl-img img { aspect-ratio: 4 / 3; }
+  .tl-img-2 { margin-top: 1rem; }
   .tl-video { align-self: start; }
 </style>
