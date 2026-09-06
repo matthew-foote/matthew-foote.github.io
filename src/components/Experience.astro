@@ -133,8 +133,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
       </div>
       <div class="reel-block">
         <p class="meta">On set at weddings and events</p>
-        <div class="reel">
-          {events.map((e) => <Image src={e.img} alt={e.alt} widths={[400, 800]} sizes="30vw" format="webp" />)}
+        <div class="marquee-reel tall" aria-label="On set at weddings and events">
+          <div class="marquee-reel-track">
+            {[...events, ...events].map((e, i) => <Image src={e.img} alt={i < events.length ? e.alt : ''} aria-hidden={i >= events.length ? 'true' : undefined} widths={[400, 800]} sizes="30vw" format="webp" />)}
+          </div>
         </div>
       </div>
     </article>
@@ -299,6 +301,8 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .marquee-reel-track.reverse { animation-direction: reverse; margin-top: 0.9rem; }
   .marquee-reel:hover .marquee-reel-track { animation-play-state: paused; }
   .marquee-reel-track img { height: clamp(150px, 22vw, 240px); width: auto; margin-right: 0.9rem; border-radius: var(--radius); }
+  .marquee-reel.tall .marquee-reel-track { animation-duration: 56s; }
+  .marquee-reel.tall .marquee-reel-track img { height: clamp(200px, 30vw, 320px); }
   @keyframes reel-slide { to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {
     .marquee-reel { overflow-x: auto; mask-image: none; padding-inline: var(--gutter); }
