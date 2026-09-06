@@ -1,0 +1,89 @@
+---
+// One interactive engine viewer. Wiring lives in public/js/engine.js, keyed by the model path.
+interface Props { model: string; label: string; onshape: string; }
+const { model, label, onshape } = Astro.props;
+---
+<div class="viewer-wrap">
+  <div class="viewer" data-model={model}>
+    <canvas aria-label={`Interactive 3D model of ${label}`}></canvas>
+    <div class="hotspot-layer"></div>
+    <p class="viewer-loading">Loading the model</p>
+    <p class="viewer-hint">Drag to rotate, scroll to zoom, tap a label for details.</p>
+  </div>
+  <div class="viewer-controls">
+    <div class="modes" role="group" aria-label="View mode">
+      <button type="button" data-mode="wireframe" aria-pressed="true">Wireframe</button>
+      <button type="button" data-mode="solid" aria-pressed="false">Solid</button>
+      <button type="button" data-mode="xray" aria-pressed="false">X-ray</button>
+      <button type="button" data-mode="slice" aria-pressed="false">Slice</button>
+    </div>
+    <div class="actions">
+      <button type="button" class="explode-btn" aria-pressed="false">Explode</button>
+      <button type="button" class="reset-view-btn">Reset view</button>
+      <a class="open-cad" href={onshape} rel="noopener">Open in Onshape</a>
+    </div>
+    <div class="slice" hidden>
+      <label>Slice height <input type="range" class="slice-slider" min="0" max="100" value="50" /></label>
+    </div>
+  </div>
+  <div class="part-panel" hidden>
+    <div>
+      <p class="h-small part-name"></p>
+      <p class="quiet part-desc"></p>
+    </div>
+    <button type="button" class="part-close" aria-label="Close part details">×</button>
+  </div>
+</div>
+
+<style is:global>
+  .viewer-wrap { position: relative; }
+  .viewer {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(70% 70% at 50% 55%, var(--paper-2), transparent 72%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    touch-action: none;
+  }
+  .viewer canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; cursor: grab; }
+  .viewer canvas:active { cursor: grabbing; }
+  .hotspot-layer { position: absolute; inset: 0; pointer-events: none; }
+  .hotspot-layer .hotspot {
+    position: absolute; transform: translate(-50%, -50%);
+    pointer-events: auto; display: inline-flex; align-items: center; gap: 0.4rem;
+    background: transparent; border: 0; padding: 0; cursor: pointer; transition: opacity 160ms ease;
+  }
+  .hotspot-layer .hotspot .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--tan); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--tan-deep);
+  }
+  .hotspot-layer .hotspot .tag {
+    font-size: 0.8rem; font-weight: 600; color: var(--ink);
+    background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 0.15rem 0.5rem; border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .viewer-loading { position: absolute; inset: 0; display: grid; place-content: center; color: var(--muted); margin: 0; }
+  .viewer-hint { position: absolute; left: 0.9rem; bottom: 0.7rem; margin: 0; font-size: 0.8rem; color: var(--muted); pointer-events: none; }
+  .viewer-controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin-top: 0.9rem; }
+  .modes, .actions { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+  .viewer-controls button, .open-cad {
+    font-size: 0.9rem; padding: 0.4rem 0.8rem; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink); text-decoration: none;
+  }
+  .viewer-controls button[aria-pressed="true"] { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+  .viewer-controls button:hover, .open-cad:hover { border-color: var(--ink); }
+  .open-cad { color: var(--forest); font-weight: 500; }
+  .slice { flex-basis: 100%; font-size: 0.9rem; color: var(--ink-2); }
+  .slice label { display: flex; align-items: center; gap: 0.75rem; }
+  .slice input { flex: 1; max-width: 320px; accent-color: var(--forest); }
+  .part-panel {
+    position: absolute; left: 0.9rem; top: 0.9rem; max-width: 22rem;
+    display: flex; gap: 0.75rem; align-items: start;
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 0.85rem 1rem;
+    box-shadow: 0 8px 24px rgba(30,36,31,0.12);
+  }
+  .part-panel .quiet { font-size: 0.92rem; margin-top: 0.2rem; }
+  .part-panel button { border: 0; background: transparent; font-size: 1.3rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 0; }
+</style>
