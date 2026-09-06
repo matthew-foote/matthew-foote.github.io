@@ -56,12 +56,12 @@ if (root) {
     try {
       viewer.resize();
       await viewer.load(root.dataset.model);
-      viewer.setMode("solid");
+      viewer.setMode("wireframe");
       loading.hidden = true;
       viewer.start();
       requestAnimationFrame(() => {
         viewer.resize();
-        viewer.frameCamera({ close: false });
+        viewer.frameCamera({ close: true });
       });
     } catch (err) {
       console.error(err);
