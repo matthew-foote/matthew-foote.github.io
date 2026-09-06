@@ -38,6 +38,8 @@ export const site = {
     enginePost: 'https://www.linkedin.com/feed/update/urn:li:activity:7493900446063996928/',
     onshape:
       'https://cad.onshape.com/documents/2e7de27d412da306461ff66c/w/b4ad1ae2201e4b2162e6cd96/e/b9ea5142a431c49cc3eecec8',
+    pathfinder:
+      'https://cad.onshape.com/documents/cea57a2d10637fd1aa4a23a0/w/a9bfaef88fbc0a44d4253ff6/e/9f3787bc5797cc9862c41ec3',
     thingiverse: 'https://www.thingiverse.com/thing:3648749',
     enlisted: '', // Enlisted's website, if you want to link it
   },
