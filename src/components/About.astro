@@ -19,7 +19,7 @@ import crew from '../assets/img/event-crew.jpg';
 const hobbies = [
   { img: trail, alt: 'Selfie on a high mountain trail in a race kit', label: 'Racing bikes' },
   { img: fpv, alt: 'Holding an FPV drone with goggles on, Lake Powell behind', label: 'Flying FPV' },
-  { img: run, alt: 'Headlamp selfie during a 54-mile ultramarathon, run through the night', label: 'Running a 54-mile ultramarathon' },
+  { img: run, alt: 'Headlamp selfie during a 54-mile ultramarathon, run through the night, with the distance, time, and pace overlaid', label: 'Running a 54-mile ultramarathon', pos: '0% 50%' },
   { img: desk, alt: 'Desk with an edit open on the monitor, drone gear, and race bibs on the wall', label: 'Editing it all' },
 ];
 
@@ -61,7 +61,7 @@ const timeline = [
       {hobbies.map((h) => (
         <li>
           <div class="frame">
-            <Image src={h.img} alt={h.alt} widths={[400, 800]} sizes="(min-width: 700px) 20vw, 50vw" format="webp" />
+            <Image src={h.img} alt={h.alt} widths={[400, 800]} sizes="(min-width: 700px) 20vw, 50vw" format="webp" style={h.pos ? `object-position:${h.pos}` : undefined} />
           </div>
           <p class="cap">{h.label}</p>
         </li>
