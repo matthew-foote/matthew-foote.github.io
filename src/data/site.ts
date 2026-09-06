@@ -27,6 +27,7 @@ export const site = {
     kizik: '', // upload the Kizik film, paste its ID here
     arcboat: 'rgaMez2KTzg', // unlisted; cleared for this site only
     enlistedInterview: 'fh5XGv1CY-s', // talking-head interview example from Enlisted
+    enlistedTutorial: 'HpFEib0rbe0', // color grading and audio tutorial recorded at Enlisted
     stnNationals: '8e72t_4ASEI', // STN Nationals winner, 24-hour on-demand challenge
     helicopter: 'itWjvH5ihZg', // Phuture Films example film for UKnighted
   },
