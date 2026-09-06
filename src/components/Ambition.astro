@@ -37,9 +37,9 @@ const path = [
     </div>
 
     <div class="engine engine-second">
-      <EngineViewer model="/models/engine.glb" label="the gimbaled ethanol engine" onshape={site.links.onshape} />
+      <EngineViewer model="/models/engine.glb" label="the gimbaled, regeneratively cooled engine" onshape={site.links.onshape} />
       <div class="engine-text">
-        <p class="engine-title display">Gimbaled ethanol engine</p>
+        <p class="engine-title display">Gimbaled, regeneratively cooled engine</p>
         <p class="quiet">The engine after Pathfinder. Ethanol and LOX, with thrust vector control in the plan. In design.</p>
         <ul class="engine-parts">
           <li>Parametric thrust chamber with revision-controlled part names</li>
@@ -108,6 +108,8 @@ const path = [
 <style>
   .engine { display: grid; gap: 2rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
   .engine-second { padding-top: clamp(2rem, 5vw, 3.5rem); border-top: 1px solid var(--line); }
+  /* Second engine mirrors the first: text on the left, model on the right. */
+  @media (min-width: 900px) { .engine-second { grid-template-columns: 0.9fr 1.1fr; } .engine-second .engine-text { order: -1; } }
   @media (min-width: 900px) { .engine { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center; } }
   .engine-parts { margin: 1.25rem 0 0.75rem; display: grid; gap: 0.35rem; padding-left: 1.1rem; list-style: disc; color: var(--ink-2); }
   .engine-parts li::marker { color: var(--tan-deep); }
