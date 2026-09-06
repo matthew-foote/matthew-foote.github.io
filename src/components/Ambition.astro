@@ -4,23 +4,11 @@ import { site } from '../data/site';
 import starship from '../assets/img/starship-pad.jpg';
 import spacex from '../assets/img/logo-spacex.png';
 
-const posting = [
-  {
-    role: 'Influence flight design so it can be built at rate',
-    me: 'Enlisted taught me to design things that are beautiful and efficient to make. Manta went from CAD to a printed 1:1 to carbon because I designed it around the tools I actually had.',
-  },
-  {
-    role: 'Design tooling that removes assembly error and cuts cycle time',
-    me: 'I have built rigs, cranes, and fixtures out of whatever was in the room. The next step is doing it with tolerances instead of tape.',
-  },
-  {
-    role: 'Develop and inspect weld processes',
-    me: 'Welding coursework and a real love for it. Nowhere near process-level yet, which is exactly why I want to be in the shop.',
-  },
-  {
-    role: 'Move parts from development into high-rate production',
-    me: 'Ran an eight-printer lab on daily deadlines. Rate at small scale, but the habits are the same: keep the machines running, keep the queue clear, fix it before it stops you.',
-  },
+const path = [
+  { when: 'Now · Fall 2026', title: 'First year of mechanical engineering at BYU.', text: 'Joining the Rocketry Club propulsion team and applying to run the shop lab in the ME building. Taking the 200 N ethanol engine from CAD through assembly review. Flying to South Texas to watch a Starship launch from Starbase in person.' },
+  { when: 'Winter 2027', title: 'Hotfire planning.', text: 'Test stand, instrumentation, and a safety review for the engine. Ride the carbon Manta bars. Get the electronic brake to a working prototype.' },
+  { when: 'Spring 2027', title: 'First hotfire.', text: 'Light the engine, learn from what breaks, and cut the next revision.' },
+  { when: 'Summer 2027', title: 'A summer in a build shop.', text: 'An internship in build engineering, structures, or propulsion. SpaceX first, then anyone else building flight hardware at rate.' },
 ];
 ---
 <section class="section" id="ambition">
@@ -84,28 +72,38 @@ const posting = [
 
     <figure class="banner">
       <Image src={starship} alt="Starship on the pad at night, venting, seen from above with the tank farm glowing orange beside it" widths={[900, 1600]} sizes="100vw" format="webp" />
-      <figcaption class="cap">The goal: build engineer on Starship at Starbase, bridging design and manufacturing so what we build is as robust as it can possibly be. Photo: SpaceX.</figcaption>
+      <figcaption class="cap">Starship on the pad at Starbase. Photo: SpaceX.</figcaption>
     </figure>
 
-    <div class="posting">
-      <div class="posting-head">
-        <h3 class="h-block">The posting, and where I stand</h3>
-        <p class="quiet">There's a job listing for exactly this role. Here's what it asks for, and an honest read of where I am today.</p>
+    <div class="goal">
+      <div class="goal-head">
+        <p class="meta">The goal</p>
+        <p class="display goal-title">Build engineer on Starship, at Starbase.</p>
+        <div class="prose">
+          <p>The job lives on the seam between design and manufacturing: making sure what the design team draws can be built at rate, and sending what the shop learns back upstream. Enlisted showed me that seam. Everything on this page is me working toward it.</p>
+        </div>
+        <p class="goal-link">
+          <a href={site.links.jobPosting} rel="noopener">
+            <Image src={spacex} alt="SpaceX" height={16} format="png" />
+            <span>The posting: Build Engineer, Starship</span>
+          </a>
+        </p>
       </div>
-      <ul class="posting-rows">
-        {posting.map((p) => (
-          <li>
-            <p class="posting-role">{p.role}</p>
-            <p class="posting-me">{p.me}</p>
-          </li>
-        ))}
-      </ul>
-      <p class="posting-link">
-        <a href={site.links.jobPosting} rel="noopener">
-          <Image src={spacex} alt="SpaceX" height={16} format="png" />
-          <span>Build Engineer, Starship. View the posting</span>
-        </a>
-      </p>
+      <div class="path">
+        <p class="meta">The next twelve months</p>
+        <ol class="path-list">
+          {path.map((p) => (
+            <li>
+              <span class="path-when">{p.when}</span>
+              <div>
+                <p class="path-title">{p.title}</p>
+                <p class="path-text">{p.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="path-foot">Open to build engineering, structures, and propulsion internships. <a href={site.resumePath} download>Resume</a> · <a href={`mailto:${site.emails[0]}`}>{site.emails[0]}</a></p>
+      </div>
     </div>
   </div>
 </section>
@@ -183,15 +181,22 @@ const posting = [
   .banner img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: 50% 45%; border-radius: var(--radius); }
   .banner figcaption { max-width: 60ch; margin-top: 0.8rem; }
 
-  .posting-head { max-width: 46em; margin-bottom: 1.5rem; }
-  .posting-head .h-block { margin-bottom: 0.5rem; }
-  .posting-rows { border-top: 1px solid var(--line-strong); }
-  .posting-rows li { display: grid; gap: 0.5rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
-  @media (min-width: 800px) { .posting-rows li { grid-template-columns: 1fr 1.4fr; gap: 3rem; } }
-  .posting-role { font-weight: 600; }
-  .posting-me { color: var(--ink-2); }
-  .posting-link { margin-top: 1.5rem; }
-  .posting-link a { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--ink); font-weight: 500; }
-  .posting-link a:hover span { text-decoration: underline; text-underline-offset: 0.18em; }
-  .posting-link img { height: 16px; width: auto; opacity: 0.85; }
+  .goal { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) { .goal { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; align-items: start; } }
+  .goal-head .meta { margin-bottom: 0.6rem; }
+  .goal-title { font-size: clamp(2rem, 4.2vw, 3.2rem); margin-bottom: 1rem; }
+  .goal-link { margin-top: 1.25rem; }
+  .goal-link a { display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--ink); font-weight: 500; }
+  .goal-link a:hover span { text-decoration: underline; text-underline-offset: 0.18em; }
+  .goal-link img { height: 16px; width: auto; opacity: 0.85; }
+
+  .path .meta { margin-bottom: 0.75rem; }
+  .path-list { border-top: 1px solid var(--line-strong); }
+  .path-list li { display: grid; gap: 0.35rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  @media (min-width: 700px) { .path-list li { grid-template-columns: 9.5rem 1fr; gap: 1.5rem; } }
+  .path-when { font-weight: 600; color: var(--tan-deep); font-size: 0.95rem; padding-top: 0.15rem; }
+  .path-title { font-weight: 600; }
+  .path-text { color: var(--ink-2); margin-top: 0.2rem; }
+  .path-foot { margin-top: 1.25rem; font-weight: 500; }
+  .path-foot a { color: var(--forest); }
 </style>
