@@ -29,57 +29,103 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
       <slot />
     </main>
     <script is:inline>
-      // Collapsible sections and jobs. Everything starts open; the toggles just let a reader fold
-      // what they've already seen. Navigating to a folded section unfolds it.
+      // Folding. Sections and job entries start folded so the page reads as an index; the whole
+      // header is the handle. Opening a section closes the others and brings it into view.
       (() => {
-        const addToggle = (target, head, label) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'fold-toggle';
-          btn.setAttribute('aria-expanded', 'true');
-          btn.setAttribute('aria-label', 'Collapse ' + label);
-          btn.textContent = 'Collapse';
-          btn.addEventListener('click', () => {
-            const collapsed = target.classList.toggle('is-collapsed');
-            btn.textContent = collapsed ? 'Expand' : 'Collapse';
-            btn.setAttribute('aria-expanded', String(!collapsed));
-            btn.setAttribute('aria-label', (collapsed ? 'Expand ' : 'Collapse ') + label);
-          });
-          head.appendChild(btn);
-          target._fold = btn;
+        const CHEV = '<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const sections = [];
+
+        const makeBody = (container, head, cls) => {
+          const body = document.createElement('div'); body.className = cls;
+          const inner = document.createElement('div'); inner.className = 'fold-inner';
+          let n = head.nextSibling;
+          while (n) { const next = n.nextSibling; inner.appendChild(n); n = next; }
+          body.appendChild(inner); container.appendChild(body);
+          return body;
         };
+        const makeToggle = (label) => {
+          const btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'fold-toggle';
+          btn.innerHTML = '<span class="fold-label">Expand</span>' + CHEV;
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Expand ' + label);
+          btn._label = label;
+          return btn;
+        };
+        const setOpen = (el, open) => {
+          el.classList.toggle('is-collapsed', !open);
+          const btn = el._fold;
+          btn.querySelector('.fold-label').textContent = open ? 'Collapse' : 'Expand';
+          btn.setAttribute('aria-expanded', String(open));
+          btn.setAttribute('aria-label', (open ? 'Collapse ' : 'Expand ') + btn._label);
+        };
+        const isOpen = (el) => !el.classList.contains('is-collapsed');
+        const reveal = (el) => {
+          const y = el.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+        };
+        const openSection = (sec, { exclusive = true, scroll = true } = {}) => {
+          if (exclusive) sections.forEach((s) => { if (s !== sec && isOpen(s)) setOpen(s, false); });
+          setOpen(sec, true);
+          if (scroll) requestAnimationFrame(() => reveal(sec));
+        };
+        const wireHead = (el, head, onToggle) => {
+          head.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            onToggle();
+          });
+          head.querySelector('.fold-toggle').addEventListener('click', (e) => { e.stopPropagation(); onToggle(); });
+        };
+
         document.querySelectorAll('section.section[id]').forEach((sec) => {
           const wrapEl = sec.querySelector(':scope > .wrap');
           const head = wrapEl && wrapEl.querySelector(':scope > .section-head');
           if (!head) return;
-          const body = document.createElement('div');
-          body.className = 'section-body';
-          let n = head.nextSibling;
-          while (n) { const next = n.nextSibling; body.appendChild(n); n = next; }
-          wrapEl.appendChild(body);
-          // move body out to be a direct child of the section so .is-collapsed > .section-body works
-          sec.appendChild(body);
-          body.classList.add('wrap');
-          addToggle(sec, head, (head.querySelector('h2') || {}).textContent || sec.id);
+          const body = makeBody(wrapEl, head, 'section-body');
+          sec.appendChild(body); body.classList.add('wrap');
+          const label = (head.querySelector('h2') || {}).textContent || sec.id;
+          const btn = makeToggle(label); head.appendChild(btn); sec._fold = btn;
+          sec.classList.add('foldable', 'is-collapsed'); sec.classList.remove('fold');
+          sections.push(sec);
+          wireHead(sec, head, () => (isOpen(sec) ? setOpen(sec, false) : openSection(sec)));
         });
+
         document.querySelectorAll('article.job').forEach((job) => {
           const head = job.querySelector(':scope > .job-head');
           if (!head) return;
-          const body = document.createElement('div');
-          body.className = 'job-body';
-          let n = head.nextSibling;
-          while (n) { const next = n.nextSibling; body.appendChild(n); n = next; }
-          job.appendChild(body);
-          addToggle(job, head, (head.querySelector('h3') || {}).textContent || 'this job');
+          makeBody(job, head, 'job-body');
+          const label = (head.querySelector('h3') || {}).textContent || 'this job';
+          const btn = makeToggle(label); head.appendChild(btn); job._fold = btn;
+          job.classList.add('foldable', 'is-collapsed'); job.classList.remove('fold');
+          wireHead(job, head, () => (isOpen(job) ? setOpen(job, false) : (setOpen(job, true), requestAnimationFrame(() => reveal(job)))));
         });
-        const unfold = () => {
+
+        // Deep links and nav clicks open the target section (and the first job, for Experience).
+        const openHash = (scroll) => {
           const id = location.hash.slice(1);
           if (!id) return;
           const sec = document.getElementById(id);
-          if (sec && sec.classList.contains('is-collapsed')) sec._fold.click();
+          if (sec && sec._fold && sections.includes(sec)) openSection(sec, { scroll });
         };
-        window.addEventListener('hashchange', unfold);
-        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(unfold, 0)));
+        window.addEventListener('hashchange', () => openHash(true));
+        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => openHash(true), 0)));
+        openHash(false);
+
+        // Expand all / collapse all, in the nav.
+        const navList = document.querySelector('.nav nav ul');
+        if (navList) {
+          const li = document.createElement('li');
+          const all = document.createElement('button');
+          all.type = 'button'; all.className = 'nav-all'; all.textContent = 'Expand all';
+          all.addEventListener('click', () => {
+            const anyClosed = sections.some((s) => !isOpen(s));
+            sections.forEach((s) => setOpen(s, anyClosed));
+            document.querySelectorAll('article.job').forEach((j) => j._fold && setOpen(j, anyClosed));
+            all.textContent = anyClosed ? 'Collapse all' : 'Expand all';
+          });
+          li.appendChild(all); navList.appendChild(li);
+        }
       })();
     </script>
   </body>
