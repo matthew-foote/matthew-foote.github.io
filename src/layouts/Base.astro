@@ -108,9 +108,17 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
           const sec = document.getElementById(id);
           if (sec && sec._fold && sections.includes(sec)) openSection(sec, { scroll });
         };
-        window.addEventListener('hashchange', () => openHash(false));
-        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => openHash(false), 0)));
-        openHash(false);
+        // The address never keeps a #hash: a fresh load always starts at the top, even if the
+        // browser restored a URL from an earlier in-page click.
+        const cleanHash = () => history.replaceState(null, '', location.pathname + location.search);
+        window.addEventListener('hashchange', () => { openHash(false); cleanHash(); });
+        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => { openHash(false); cleanHash(); }, 0)));
+        if (location.hash) {
+          cleanHash();
+          window.scrollTo(0, 0);
+          window.addEventListener('load', () => window.scrollTo(0, 0), { once: true });
+        }
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
         // Floating "Collapse" pill: fades in at the side once you've scrolled past an open
         // section's header, so the section can be folded from anywhere inside it.
