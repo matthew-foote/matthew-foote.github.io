@@ -3,9 +3,10 @@ import { Image } from 'astro:assets';
 import { site } from '../data/site';
 import starship from '../assets/img/starship-pad.jpg';
 import spacex from '../assets/img/logo-spacex.png';
+import EngineViewer from './EngineViewer.astro';
 
 const path = [
-  { when: 'Now · Fall 2026', title: 'First year of mechanical engineering at BYU.', text: 'Joining the Rocketry Club propulsion team and applying to run the shop lab in the ME building. Taking the 200 N ethanol engine from CAD through assembly review. Flying to South Texas to watch a Starship launch from Starbase in person.' },
+  { when: 'Now · Fall 2026', title: 'First year of mechanical engineering at BYU.', text: 'Joining the Rocketry Club propulsion team and applying to run the shop lab in the ME building. Taking Pathfinder, the 200 N engine, from CAD through assembly review. Flying to South Texas to watch a Starship launch from Starbase in person.' },
   { when: 'Winter 2027', title: 'Hotfire planning.', text: 'Test stand, instrumentation, and a safety review for the engine. Ride the carbon Manta bars. Get the electronic brake to a working prototype.' },
   { when: 'Spring 2027', title: 'First hotfire.', text: 'Light the engine, learn from what breaks, and cut the next revision.' },
   { when: 'Summer 2027', title: 'A summer in a build shop.', text: 'An internship in build engineering, structures, or propulsion. SpaceX first, then anyone else building flight hardware at rate.' },
@@ -19,41 +20,27 @@ const path = [
     </div>
 
     <div class="engine">
-      <div class="viewer-wrap">
-        <div class="viewer" id="engine-viewer" data-model="/models/engine.glb">
-          <canvas aria-label="Interactive 3D model of the liquid ethanol rocket engine"></canvas>
-          <div class="hotspot-layer"></div>
-          <p class="viewer-loading">Loading the engine model</p>
-          <p class="viewer-hint">Drag to rotate, scroll to zoom, tap a label for details.</p>
-        </div>
-        <div class="viewer-controls">
-          <div class="modes" role="group" aria-label="View mode">
-            <button type="button" data-mode="wireframe" aria-pressed="true">Wireframe</button>
-            <button type="button" data-mode="solid" aria-pressed="false">Solid</button>
-            <button type="button" data-mode="xray" aria-pressed="false">X-ray</button>
-            <button type="button" data-mode="slice" aria-pressed="false">Slice</button>
-          </div>
-          <div class="actions">
-            <button type="button" id="explode-btn" aria-pressed="false">Explode</button>
-            <button type="button" id="reset-view-btn">Reset view</button>
-            <a class="open-cad" href={site.links.onshape} rel="noopener">Open in Onshape</a>
-          </div>
-          <div class="slice" id="slice-controls" hidden>
-            <label for="slice-slider">Slice height</label>
-            <input type="range" id="slice-slider" min="0" max="100" value="50" />
-          </div>
-        </div>
-        <div class="part-panel" id="part-panel" hidden>
-          <div>
-            <p class="h-small" id="part-name"></p>
-            <p class="quiet" id="part-desc"></p>
-          </div>
-          <button type="button" id="part-close" aria-label="Close part details">×</button>
+      <EngineViewer model="/models/pathfinder.glb" label="the Pathfinder engine" onshape={site.links.pathfinder} />
+      <div class="engine-text">
+        <p class="engine-title display">Pathfinder</p>
+        <p class="quiet">A 200 N liquid engine, Block A. The one I'm building now. Drag to turn it over.</p>
+        <ul class="engine-parts">
+          <li>C145 copper liner: chamber, throat, and nozzle contour in one piece</li>
+          <li>303/304 stainless injector plate</li>
+          <li>304 stainless jacket around the liner</li>
+        </ul>
+        <p class="meta engine-process">CAD baseline done. Next: hotfire planning, then a test stand.</p>
+        <div class="prose engine-prose">
+          <p>Pathfinder is small on purpose. Three parts, machinable materials, and a thrust level a student team can test safely. It exists to teach me the whole loop: design, build, light it, learn from what breaks, cut the next block.</p>
         </div>
       </div>
+    </div>
+
+    <div class="engine engine-second">
+      <EngineViewer model="/models/engine.glb" label="the gimbaled ethanol engine" onshape={site.links.onshape} />
       <div class="engine-text">
-        <p class="engine-title display">Liquid ethanol rocket engine</p>
-        <p class="quiet">In progress. This is the actual model, drag to turn it over.</p>
+        <p class="engine-title display">Gimbaled ethanol engine</p>
+        <p class="quiet">The engine after Pathfinder. Ethanol and LOX, with thrust vector control in the plan. In design.</p>
         <ul class="engine-parts">
           <li>Parametric thrust chamber with revision-controlled part names</li>
           <li>Injector body with an integrated torch igniter</li>
@@ -63,7 +50,7 @@ const path = [
         </ul>
         <p class="meta engine-process">Requirements, then parametric CAD, then assembly review, then hotfire planning.</p>
         <div class="prose engine-prose">
-          <p>Before my mission I watched a Falcon 9 streak across the sky over Joshua Tree, and I've been chasing that feeling since. When I got home I went straight back to rockets, designed my first two liquid engines, and started this one.</p>
+          <p>Before my mission I watched a Falcon 9 streak across the sky over Joshua Tree, and I've been chasing that feeling since. When I got home I went straight back to rockets, designed my first two liquid engines, and started these.</p>
           <p>At BYU I'm joining the Rocketry Club to help build an engine better than anything I could make alone. What I love most is the seam between design and manufacturing, the part where a drawing has to survive contact with real tools, real materials, and real deadlines. Enlisted showed me that seam, and I want to spend my career on it.</p>
         </div>
         <p class="engine-links"><a href={site.links.enginePost} rel="noopener">Read about the build on LinkedIn</a></p>
@@ -120,56 +107,8 @@ const path = [
 
 <style>
   .engine { display: grid; gap: 2rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
+  .engine-second { padding-top: clamp(2rem, 5vw, 3.5rem); border-top: 1px solid var(--line); }
   @media (min-width: 900px) { .engine { grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center; } }
-  .viewer-wrap { position: relative; }
-  .viewer {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    background: radial-gradient(70% 70% at 50% 55%, var(--paper-2), transparent 72%);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-    touch-action: none;
-  }
-  .viewer canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; cursor: grab; }
-  .viewer canvas:active { cursor: grabbing; }
-  .hotspot-layer { position: absolute; inset: 0; pointer-events: none; }
-  .hotspot-layer :global(.hotspot) {
-    position: absolute; transform: translate(-50%, -50%);
-    pointer-events: auto; display: inline-flex; align-items: center; gap: 0.4rem;
-    background: transparent; border: 0; padding: 0; cursor: pointer; transition: opacity 160ms ease;
-  }
-  .hotspot-layer :global(.hotspot .dot) {
-    width: 12px; height: 12px; border-radius: 50%;
-    background: var(--tan); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--tan-deep);
-  }
-  .hotspot-layer :global(.hotspot .tag) {
-    font-size: 0.8rem; font-weight: 600; color: var(--ink);
-    background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 0.15rem 0.5rem; border-radius: 999px;
-    border: 1px solid var(--line);
-  }
-  .viewer-loading { position: absolute; inset: 0; display: grid; place-content: center; color: var(--muted); margin: 0; }
-  .viewer-hint { position: absolute; left: 0.9rem; bottom: 0.7rem; margin: 0; font-size: 0.8rem; color: var(--muted); pointer-events: none; }
-  .viewer-controls { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin-top: 0.9rem; }
-  .modes, .actions { display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
-  .viewer-controls button, .open-cad {
-    font-size: 0.9rem; padding: 0.4rem 0.8rem; border-radius: 999px; cursor: pointer;
-    border: 1px solid var(--line-strong); background: transparent; color: var(--ink); text-decoration: none;
-  }
-  .viewer-controls button[aria-pressed="true"] { background: var(--forest); border-color: var(--forest); color: var(--paper); }
-  .viewer-controls button:hover, .open-cad:hover { border-color: var(--ink); }
-  .open-cad { color: var(--forest); font-weight: 500; }
-  .slice { flex-basis: 100%; display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--ink-2); }
-  .slice input { flex: 1; max-width: 320px; accent-color: var(--forest); }
-  .part-panel {
-    position: absolute; left: 0.9rem; top: 0.9rem; max-width: 22rem;
-    display: flex; gap: 0.75rem; align-items: start;
-    background: color-mix(in srgb, var(--paper) 94%, transparent);
-    border: 1px solid var(--line); border-radius: var(--radius); padding: 0.85rem 1rem;
-    box-shadow: 0 8px 24px rgba(30,36,31,0.12);
-  }
-  .part-panel .quiet { font-size: 0.92rem; margin-top: 0.2rem; }
-  .part-panel button { border: 0; background: transparent; font-size: 1.3rem; line-height: 1; cursor: pointer; color: var(--muted); padding: 0; }
   .engine-parts { margin: 1.25rem 0 0.75rem; display: grid; gap: 0.35rem; padding-left: 1.1rem; list-style: disc; color: var(--ink-2); }
   .engine-parts li::marker { color: var(--tan-deep); }
   .engine-process { margin-bottom: 0.5rem; }
