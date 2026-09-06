@@ -49,13 +49,18 @@ const timeline = [
       <div class="intro-text prose">
         <p class="lede">Hi, I'm Matthew Foote, a mechanical engineering student at BYU. I love designing and building hardware, rocketry, and anything engineering. In my free time I race bikes, fly FPV drones, run long distances, and make videos documenting all of it.</p>
         <p class="quiet">I got home from two years in the Philippines in August and went straight back to the shop.</p>
-        <p class="quiet">Here's a short film about why I ride. It was made properly, and it says it better than I can.</p>
       </div>
     </div>
 
-    <div class="film">
-      <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
-      <p class="cap">My NICA racing journey, in about three minutes.</p>
+    <div class="film-row">
+      <div class="film-text">
+        <p class="film-lede">Here's a short film about why I ride.</p>
+        <p class="quiet">It was made properly, by people who know what they're doing, and it says it better than I can. Three minutes, if you have them.</p>
+      </div>
+      <div class="film-tile">
+        <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
+        <p class="cap">My NICA racing journey.</p>
+      </div>
     </div>
 
     <ul class="hobbies">
@@ -110,8 +115,10 @@ const timeline = [
   .intro-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius); }
   .intro-text .lede { margin-bottom: 1.25rem; }
 
-  .film { margin-bottom: 3rem; }
-  @media (min-width: 900px) { .film { width: min(100%, 880px); } }
+  .film-row { display: grid; gap: 1.5rem; margin-bottom: 3rem; align-items: center; }
+  @media (min-width: 900px) { .film-row { grid-template-columns: 1fr 1.15fr; gap: 3.5rem; } }
+  .film-lede { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.75rem; }
+  .film-text .quiet { font-size: 1.05rem; }
 
   .hobbies { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
   @media (min-width: 700px) { .hobbies { grid-template-columns: repeat(3, 1fr); } }
