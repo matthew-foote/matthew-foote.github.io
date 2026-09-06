@@ -82,6 +82,12 @@ import hero from '../assets/img/portrait-bw.jpg';
     border-radius: var(--radius);
     box-shadow: 14px 14px 0 0 var(--tan);
   }
+  /* On phones the photo leads; the title and text follow it. */
+  @media (max-width: 899px) {
+    .hero { padding-top: 1.25rem; }
+    .hero-photo { order: -1; }
+    .hero-photo img { aspect-ratio: 4 / 5; box-shadow: 10px 10px 0 0 var(--tan); }
+  }
 
   /* One page-load moment: the three lines of the title settle in. */
   @media (prefers-reduced-motion: no-preference) {
