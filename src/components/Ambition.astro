@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { site } from '../data/site';
-import starship from '../assets/img/starship-booster.jpg';
+import starship from '../assets/img/starship-pad.jpg';
 import spacex from '../assets/img/logo-spacex.png';
 
 const posting = [
@@ -83,7 +83,7 @@ const posting = [
     </div>
 
     <figure class="banner">
-      <Image src={starship} alt="Super Heavy booster lifting off, all engines lit, seen from below the launch tower" widths={[800, 1400]} sizes="100vw" format="webp" />
+      <Image src={starship} alt="Starship on the pad at night, venting, seen from above with the tank farm glowing orange beside it" widths={[900, 1600]} sizes="100vw" format="webp" />
       <figcaption class="cap">The goal: build engineer on Starship at Starbase, bridging design and manufacturing so what we build is as robust as it can possibly be. Photo: SpaceX.</figcaption>
     </figure>
 
@@ -180,7 +180,7 @@ const posting = [
   .engine-prose { margin-top: 1.25rem; }
 
   .banner { margin: 0 0 clamp(3rem, 7vw, 5rem); }
-  .banner img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: 50% 42%; border-radius: var(--radius); }
+  .banner img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; object-position: 50% 45%; border-radius: var(--radius); }
   .banner figcaption { max-width: 60ch; margin-top: 0.8rem; }
 
   .posting-head { max-width: 46em; margin-bottom: 1.5rem; }
