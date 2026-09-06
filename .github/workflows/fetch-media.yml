@@ -1,8 +1,8 @@
 name: Fetch media
 
-# Add lines to media-manifest.txt as  url|path/in/repo  and push.
+# Add lines to media-manifest.txt as  url | path/in/repo  and push.
 # This workflow downloads each file that isn't already in the repo,
-# commits it, and then rebuilds the site.
+# commits it, and then kicks off the normal site deploy.
 
 on:
   push:
@@ -11,19 +11,15 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  actions: write
 
 concurrency:
-  group: pages
+  group: media
   cancel-in-progress: false
 
 jobs:
-  fetch-and-deploy:
+  fetch:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Download files listed in the manifest
@@ -38,19 +34,20 @@ jobs:
             curl -fsSL --retry 3 -A "Mozilla/5.0" "$url" -o "$dest"
           done < media-manifest.txt
       - name: Commit downloaded files
+        id: commit
         run: |
           git config user.name "media-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "Add media from manifest"
-          git push
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm install
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Add media from manifest"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Rebuild the site
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
