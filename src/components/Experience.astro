@@ -51,6 +51,8 @@ const stills = [
   { img: sBack, alt: 'Back of a cap and blond hair against a bright sky' },
   { img: sTorch2, alt: 'Torch-lit western close-up' },
 ];
+const rowA = stills.slice(0, 5);
+const rowB = stills.slice(5);
 const events = [
   { img: eventCrew, alt: 'Three cameramen at an event, smiling' },
   { img: event2, alt: 'Reviewing a shot on a gimbal rig at golden hour' },
@@ -209,7 +211,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
         <p class="meta">Selected frames</p>
         <div class="marquee-reel" aria-label="Selected frames from North Media House films">
           <div class="marquee-reel-track">
-            {[...stills, ...stills].map((s, i) => <Image src={s.img} alt={i < stills.length ? s.alt : ''} aria-hidden={i >= stills.length ? 'true' : undefined} widths={[600, 1000]} sizes="45vw" format="webp" />)}
+            {[...rowA, ...rowA].map((s, i) => <Image src={s.img} alt={i < rowA.length ? s.alt : ''} aria-hidden={i >= rowA.length ? 'true' : undefined} widths={[600, 1000]} sizes="40vw" format="webp" />)}
+          </div>
+          <div class="marquee-reel-track reverse">
+            {[...rowB, ...rowB].map((s, i) => <Image src={s.img} alt={i < rowB.length ? s.alt : ''} aria-hidden={i >= rowB.length ? 'true' : undefined} widths={[600, 1000]} sizes="40vw" format="webp" />)}
           </div>
         </div>
       </div>
@@ -276,15 +281,16 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .reel-video-wide { aspect-ratio: 4 / 3; }
   .reel-video video { height: 100%; width: 100%; object-fit: cover; }
 
-  /* Selected frames: a slow, continuous drift. Hover to pause. */
+  /* Selected frames: two rows drifting in opposite directions. Hover to pause. */
   .marquee-reel {
     overflow: hidden;
     margin-inline: calc(-1 * var(--gutter));
     mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
   }
-  .marquee-reel-track { display: flex; width: max-content; animation: reel-slide 70s linear infinite; }
+  .marquee-reel-track { display: flex; width: max-content; animation: reel-slide 48s linear infinite; }
+  .marquee-reel-track.reverse { animation-direction: reverse; margin-top: 0.9rem; }
   .marquee-reel:hover .marquee-reel-track { animation-play-state: paused; }
-  .marquee-reel-track img { height: clamp(200px, 32vw, 340px); width: auto; margin-right: 0.9rem; border-radius: var(--radius); }
+  .marquee-reel-track img { height: clamp(150px, 22vw, 240px); width: auto; margin-right: 0.9rem; border-radius: var(--radius); }
   @keyframes reel-slide { to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {
     .marquee-reel { overflow-x: auto; mask-image: none; padding-inline: var(--gutter); }
