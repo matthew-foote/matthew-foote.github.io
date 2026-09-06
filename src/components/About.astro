@@ -29,7 +29,7 @@ const timeline = [
   { age: '15', text: 'Made a LinkedIn profile, went to a business conference, and wrote a post about why I wanted to work at Enlisted, a studio building the first production electric boat designed from the ground up. Interviewed the next day and got the internship. Fixed their printers, ran to Home Depot, and filmed the engineers at work.', img: beau, alt: 'Matthew with Beau Oyler, founder and CEO of Enlisted Design, in the studio', cap: 'With Beau Oyler, founder and CEO of Enlisted.' },
   { age: '16–17', text: 'Bought my first real camera. Became director of photography at Phuture Films and built a team around me that made five award-winning films in a short window, winning two national competitions. Shot weddings and brand work, and built cranes and rigs out of whatever was around.', img: crew, alt: 'Three cameramen at an event, smiling' },
   { age: '18', text: 'Designed and printed aero fairings to gain an edge on the race course. Founded North Media House and ran it through the summer. Two weeks before I left on my mission, I ran fifty miles through the night.', img: fairing, alt: '3D-printed textured fairing fitted to a bike seatpost' },
-  { age: '18–20', text: 'Two years of full-time missionary service in the Philippines San Pablo Mission, in Tagalog. Long weeks, new places, and a lot of learning how to work with people.', img: fhe, alt: 'A packed room of Unisan Branch members waving and making faces for a selfie at family home evening', cap: 'Family home evening with the Unisan Branch. Everyone came.', img2: suit, alt2: 'Portrait in a dark suit and tie under green trees' },
+  { age: '18–20', text: 'Two years of full-time missionary service in the Philippines San Pablo Mission, in Tagalog. Long weeks, new places, and a lot of learning how to work with people.', img: fhe, alt: 'A packed room of Unisan Branch members waving and making faces for a selfie at family home evening', cap: 'Family home evening with the Unisan Branch.', img2: suit, alt2: 'Portrait in a dark suit and tie under green trees' },
   { age: 'Now', text: 'Home since August, and a first-year mechanical engineering student at BYU. I came back to rockets: designed my first two liquid engines, and am now building a liquid ethanol engine, laying up carbon fiber, and refining Manta, the handlebar I designed from a problem I hit while racing.', img: carbon, alt: 'Carbon fiber handlebar prototype on concrete' },
 ];
 ---
@@ -52,15 +52,9 @@ const timeline = [
       </div>
     </div>
 
-    <div class="films">
-      <div>
-        <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
-        <p class="cap">My NICA racing journey, in about three minutes.</p>
-      </div>
-      <div>
-        <YouTube id={site.youtube.ride} title="Riding, shot on GoPro chest mount" />
-        <p class="cap">And this is what free time looks like. GoPro on a chest mount, no crew.</p>
-      </div>
+    <div class="film">
+      <YouTube id={site.youtube.nica} title="My NICA Racing Journey" />
+      <p class="cap">My NICA racing journey, in about three minutes.</p>
     </div>
 
     <ul class="hobbies">
@@ -115,8 +109,8 @@ const timeline = [
   .intro-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius); }
   .intro-text .lede { margin-bottom: 1.25rem; }
 
-  .films { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
-  @media (min-width: 700px) { .films { grid-template-columns: 1fr 1fr; } }
+  .film { margin-bottom: 3rem; }
+  @media (min-width: 900px) { .film { width: min(100%, 880px); } }
 
   .hobbies { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
   @media (min-width: 700px) { .hobbies { grid-template-columns: repeat(3, 1fr); } }
