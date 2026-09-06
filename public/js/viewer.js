@@ -101,6 +101,10 @@ export class RocketViewer {
     this.root = canvas.parentElement;
     this.onPartSelect = opts.onPartSelect || (() => {});
     this.hotspotLayer = opts.hotspotLayer || null;
+    this.parts = opts.parts || PART_INFO;
+    this.hotspotKeys = opts.hotspots || HOTSPOT_KEYS;
+    // Euler rotation applied to the model so it stands upright (Onshape exports are not Y-up).
+    this.rotation = opts.rotation || [-Math.PI / 2, 0, 0];
     this.mode = "wireframe";
     this.defaultClose = true;
     this.explode = false;
@@ -302,8 +306,8 @@ export class RocketViewer {
     const targetSize = 2.2;
     const fit = targetSize / maxDim;
     pivot.scale.setScalar(fit);
-    // Onshape exports Z-up. Stand the engine upright: injector at the top, nozzle at the bottom.
-    pivot.rotation.x = -Math.PI / 2;
+    // Stand the engine upright: injector at the top, nozzle at the bottom.
+    pivot.rotation.set(this.rotation[0], this.rotation[1], this.rotation[2]);
 
     this.scene.add(pivot);
     this.modelRoot = pivot;
@@ -392,7 +396,8 @@ export class RocketViewer {
       const mats = baseMaterials.map((b) => this.materialForMode(b, envelope));
 
       // Emphasize chamber / injector in x-ray
-      if (this.mode === "xray" && (name.includes("THRUST_CHAMBER") || name.includes("INJECTOR"))) {
+      const upper = name.toUpperCase();
+      if (this.mode === "xray" && (upper.includes("THRUST_CHAMBER") || upper.includes("INJECTOR") || upper.includes("LINER"))) {
         mats.forEach((m) => {
           m.opacity = 0.55;
           m.color = new THREE.Color(0x2e5b3c);
@@ -453,12 +458,15 @@ export class RocketViewer {
     if (!layer) return;
     this.clearHotspots();
 
-    HOTSPOT_KEYS.forEach((key) => {
+    // GLTFLoader sanitizes node names (spaces become underscores), so match on a normalized form.
+    const norm = (s) => String(s).replace(/\s+/g, "_").toUpperCase();
+    this.hotspotKeys.forEach((key) => {
+      const prefix = norm(key.split("__")[0]);
       const entry = this.meshEntries.find(
-        (e) => e.name === key || e.name.startsWith(key.split("__")[0])
+        (e) => e.name === key || norm(e.name).startsWith(prefix)
       );
       if (!entry) return;
-      const info = PART_INFO[key] || { label: prettyName(key), desc: "" };
+      const info = this.parts[key] || { label: prettyName(key), desc: "" };
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "hotspot";
