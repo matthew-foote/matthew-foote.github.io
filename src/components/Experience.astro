@@ -207,8 +207,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
 
       <div class="reel-block">
         <p class="meta">Selected frames</p>
-        <div class="reel">
-          {stills.map((s) => <Image src={s.img} alt={s.alt} widths={[600, 1000]} sizes="45vw" format="webp" />)}
+        <div class="marquee-reel" aria-label="Selected frames from North Media House films">
+          <div class="marquee-reel-track">
+            {[...stills, ...stills].map((s, i) => <Image src={s.img} alt={i < stills.length ? s.alt : ''} aria-hidden={i >= stills.length ? 'true' : undefined} widths={[600, 1000]} sizes="45vw" format="webp" />)}
+          </div>
         </div>
       </div>
 
@@ -273,6 +275,22 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .reel-video { height: clamp(200px, 32vw, 340px); aspect-ratio: 9 / 16; }
   .reel-video-wide { aspect-ratio: 4 / 3; }
   .reel-video video { height: 100%; width: 100%; object-fit: cover; }
+
+  /* Selected frames: a slow, continuous drift. Hover to pause. */
+  .marquee-reel {
+    overflow: hidden;
+    margin-inline: calc(-1 * var(--gutter));
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+  .marquee-reel-track { display: flex; width: max-content; animation: reel-slide 70s linear infinite; }
+  .marquee-reel:hover .marquee-reel-track { animation-play-state: paused; }
+  .marquee-reel-track img { height: clamp(200px, 32vw, 340px); width: auto; margin-right: 0.9rem; border-radius: var(--radius); }
+  @keyframes reel-slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-reel { overflow-x: auto; mask-image: none; padding-inline: var(--gutter); }
+    .marquee-reel-track { animation: none; }
+    .marquee-reel-track img[aria-hidden] { display: none; }
+  }
 
   .films { display: grid; gap: 1.5rem; margin-top: 2.5rem; max-width: 880px; }
   .films-2 { max-width: none; margin-top: 0; margin-bottom: 2rem; }
