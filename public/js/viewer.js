@@ -491,7 +491,7 @@ export class RocketViewer {
     const fitted = new THREE.Box3().setFromObject(this.modelRoot);
     const sphere = fitted.getBoundingSphere(new THREE.Sphere());
     const fov = THREE.MathUtils.degToRad(this.camera.fov);
-    const zoom = close ? 0.58 : 0.9;
+    const zoom = close ? 0.72 : 0.9;
     const dist = (sphere.radius / Math.sin(fov / 2)) * zoom;
 
     // Bias target toward chamber / injector (upper stack)
