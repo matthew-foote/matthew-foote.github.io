@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { site } from '../data/site';
 import YouTube from './YouTube.astro';
+import VideoLoop from './VideoLoop.astro';
 import portrait from '../assets/img/hero-race.jpg';
 import trail from '../assets/img/trail-selfie.jpg';
 import fpv from '../assets/img/fpv-powell.jpg';
@@ -65,11 +66,15 @@ const timeline = [
       {hobbies.map((h) => (
         <li>
           <div class="frame">
-            <Image src={h.img} alt={h.alt} widths={[400, 800]} sizes="(min-width: 700px) 25vw, 50vw" format="webp" />
+            <Image src={h.img} alt={h.alt} widths={[400, 800]} sizes="(min-width: 700px) 20vw, 50vw" format="webp" />
           </div>
           <p class="cap">{h.label}</p>
         </li>
       ))}
+      <li class="hobby-video">
+        <VideoLoop src="/media/video/skate-loop.mp4" label="Skateboarding down an empty road with the Tetons behind" aspect="4/5" />
+        <p class="cap">Skating</p>
+      </li>
     </ul>
 
     <h3 class="h-block tl-title">How I got here</h3>
@@ -105,8 +110,11 @@ const timeline = [
   @media (min-width: 700px) { .films { grid-template-columns: 1fr 1fr; } }
 
   .hobbies { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: clamp(3rem, 7vw, 5rem); }
-  @media (min-width: 700px) { .hobbies { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 700px) { .hobbies { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1000px) { .hobbies { grid-template-columns: repeat(5, 1fr); } }
   .hobbies .frame img { aspect-ratio: 4 / 5; }
+  .hobby-video .loop { aspect-ratio: 4 / 5; }
+  @media (max-width: 699px) { .hobby-video { grid-column: span 2; } .hobby-video .loop { aspect-ratio: 4 / 3 !important; } }
 
   .tl-title { margin-bottom: 2rem; }
   .timeline { display: grid; border-top: 1px solid var(--line); }
