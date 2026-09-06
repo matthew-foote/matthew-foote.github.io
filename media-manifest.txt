@@ -10,3 +10,4 @@ https://d.uguu.se/XkDAhsoE.jpg | src/assets/img/enlisted-lab.jpg
 https://h.uguu.se/SDYXXFZg.jpg | src/assets/img/unisan-fhe.jpg
 https://h.uguu.se/WnBTZZmD.jpg | src/assets/img/rocket-launch.jpg
 https://n.uguu.se/iQfOMmoe.jpg | src/assets/img/byu-desk.jpg
+https://n.uguu.se/WYdCYwbM.glb | public/models/pathfinder.glb
