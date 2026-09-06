@@ -1,6 +1,6 @@
 # Media manifest. One file per line:  <download url> | <path in repo>
 # Pushing a change to this file runs the "Fetch media" workflow, which downloads
-# anything not already in the repo, commits it, and redeploys the site.
+# anything not already in the repo, commits it, and rebuilds the site.
 # Lines are skipped once the file exists, so old URLs can expire harmlessly.
 
 https://h.uguu.se/dplilYLE.jpg | src/assets/img/starship-pad.jpg
