@@ -227,18 +227,25 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
         </div>
       </div>
 
-      <div class="films films-3">
-        <div>
-          <YouTube id={site.youtube.sony} title="Sony spec ad" />
-          <p class="cap">Sony spec ad. Written, shot, and cut at North.</p>
-        </div>
-        <div>
-          <YouTube id={site.youtube.blender} title="BlenderBottle spec shoot" />
-          <p class="cap">BlenderBottle spec shoot. The one to watch for lighting: shaping it, and knowing when to let the sun do the work.</p>
-        </div>
-        <div>
-          <YouTube id={site.youtube.redbull} title="Red Bull spec ad" />
-          <p class="cap">Red Bull spec ad.</p>
+      <div class="reel-block spec-block">
+        <p class="meta">Spec ads</p>
+        <div class="films films-2 spec-grid">
+          <div>
+            <YouTube id={site.youtube.sony} title="Sony spec ad" />
+            <p class="cap">Sony spec ad. Written, shot, and cut at North.</p>
+          </div>
+          <div>
+            <YouTube id={site.youtube.blender} title="BlenderBottle spec shoot" />
+            <p class="cap">BlenderBottle spec shoot. The one to watch for lighting: shaping it, and knowing when to let the sun do the work.</p>
+          </div>
+          <div>
+            <YouTube id={site.youtube.poc} title="POC spec ad" />
+            <p class="cap">POC spec ad. Another one to watch for the lighting.</p>
+          </div>
+          <div>
+            <YouTube id={site.youtube.redbull} title="Red Bull spec ad" />
+            <p class="cap">Red Bull spec ad.</p>
+          </div>
         </div>
       </div>
     </article>
@@ -324,9 +331,8 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .job-intro { margin-bottom: 2rem; }
   .films-pair { margin-bottom: 2rem; }
   @media (min-width: 700px) { .films-2 { grid-template-columns: 1fr 1fr; } }
-  .films-3 { max-width: none; margin-top: 2.5rem; }
-  @media (min-width: 700px) { .films-3 { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1000px) { .films-3 { grid-template-columns: 1fr 1fr 1fr; } }
+  .spec-block { margin-top: 2.5rem; margin-bottom: 0; }
+  .spec-grid { row-gap: 2rem; }
 </style>
 
 <script>
