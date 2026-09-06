@@ -1,11 +1,16 @@
 ---
+import { Image } from 'astro:assets';
 import { site } from '../data/site';
+import me from '../assets/img/portrait-bw.jpg';
 const year = new Date().getFullYear();
 ---
 <footer class="section contact" id="contact">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="h-section">Say hi</h2>
+      <div class="say-hi">
+        <Image src={me} alt="Matthew" width={176} height={176} format="webp" class="avatar" loading="eager" />
+        <h2 class="h-section">Say hi</h2>
+      </div>
       <p class="lede">If you're building something and need another pair of hands, or you just want to talk rockets, I'd love to hear from you.</p>
     </div>
     <ul class="contact-list">
@@ -24,6 +29,9 @@ const year = new Date().getFullYear();
 <style>
   .contact { background: var(--moss); margin-top: var(--section); padding-top: clamp(3rem, 7vw, 5rem); padding-bottom: clamp(3rem, 6vw, 4.5rem); }
   .contact .section-head { border-top-color: var(--line); }
+  .say-hi { display: flex; align-items: center; gap: 1.25rem; }
+  .avatar { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--line-strong); flex: none; }
+  @media (max-width: 600px) { .avatar { width: 64px; height: 64px; } }
   .contact-list { display: grid; gap: 0.75rem; border-top: 1px solid var(--line); }
   .contact-list li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; }
   .contact-list a { color: var(--ink); text-decoration-color: var(--tan-deep); }
