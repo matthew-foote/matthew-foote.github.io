@@ -106,9 +106,15 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
           <YouTube id={site.youtube.arcboat} title="Building the boat: the Enlisted design documentary" poster={arcPoster} note="Film coming soon" />
           <p class="cap">The documentary I shot and cut at Enlisted, following the design team through the build.</p>
         </div>
-        <div>
-          <div class="frame lab-photo"><Image src={lab} alt="The basement lab at Enlisted: 3D printers running on the bench, camera gear laid out on the floor" widths={[500, 1000]} sizes="(min-width: 900px) 36vw, 100vw" format="webp" /></div>
-          <p class="cap">The basement lab I ran. Printers on the bench, camera gear on the floor, both mine to keep working.</p>
+        <div class="job-media-side">
+          <div>
+            <YouTube id={site.youtube.enlistedInterview} title="Talking-head interview, shot at Enlisted" />
+            <p class="cap">One of the engineer interviews. Lit, shot, and cut by me.</p>
+          </div>
+          <div>
+            <div class="frame lab-photo"><Image src={lab} alt="The basement lab at Enlisted: 3D printers running on the bench, camera gear laid out on the floor" widths={[500, 1000]} sizes="(min-width: 900px) 30vw, 100vw" format="webp" /></div>
+            <p class="cap">The basement lab I ran. Printers on the bench, camera gear on the floor.</p>
+          </div>
         </div>
       </div>
     </article>
@@ -273,9 +279,10 @@ const fullRec = `I had the pleasure of working closely with Matt during his time
   .rec details p { margin-top: 0.75rem; color: var(--ink-2); font-size: 0.98rem; }
 
   .job-media { display: grid; gap: 1.5rem; }
-  @media (min-width: 900px) { .job-media { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+  .job-media-side { display: grid; gap: 1.5rem; }
+  @media (min-width: 700px) and (max-width: 899px) { .job-media-side { grid-template-columns: 1fr 1fr; } }
   .lab-photo img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
-  @media (min-width: 900px) { .lab-photo img { aspect-ratio: auto; height: 100%; } .job-media > div { display: grid; grid-template-rows: 1fr auto; } .job-media .lab-photo { height: 100%; } }
+  @media (min-width: 900px) { .job-media { grid-template-columns: 2fr 1fr; align-items: start; } }
 
   .nmh-open { display: grid; gap: 2rem; margin-bottom: 2.5rem; }
   @media (min-width: 900px) { .nmh-open { grid-template-columns: 1fr 300px; gap: 3.5rem; align-items: start; } }
