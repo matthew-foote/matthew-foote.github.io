@@ -8,7 +8,7 @@ import trail from '../assets/img/trail-selfie.jpg';
 import fpv from '../assets/img/fpv-powell.jpg';
 import run from '../assets/img/run-50mi.jpg';
 import desk from '../assets/img/desk.jpg';
-import arc from '../assets/img/poster-arcboat.jpg';
+import beau from '../assets/img/beau-oyler.jpg';
 import fairing from '../assets/img/seatpost-fairing.jpg';
 import carbon from '../assets/img/carbon-bar.jpg';
 import suit from '../assets/img/portrait-suit.jpg';
@@ -25,7 +25,7 @@ const hobbies = [
 const timeline = [
   { age: '13', text: 'Built my first 3D printer and taught myself Fusion 360. Designed a housing for it and printed small gliders. I loved watching something come from nothing.' },
   { age: '14', text: 'Spent summer mornings in the computer lab teaching myself HTML and CSS. Designed and printed my first rocket, a water rocket with its own parachute deployment system, launched it off the school field, and published it on Thingiverse, where it still lives.', link: { href: site.links.thingiverse, label: 'The rocket, on Thingiverse' }, video: site.youtube.waterRocket, videoTitle: 'Water rocket parachute deployment system, 9th grade', img: rocket9, alt: 'A 3D-printed rocket lifting off a launch stand on a school field, thumbs up from the launcher' },
-  { age: '15', text: 'Made a LinkedIn profile, went to a business conference, and wrote a post about why I wanted to work at Enlisted, a studio building the first production electric boat designed from the ground up. Interviewed the next day and got the internship. Fixed their printers, ran to Home Depot, and filmed the engineers at work.', img: arc, alt: 'Frame from the Enlisted design documentary: a designer seated in a dark workshop' },
+  { age: '15', text: 'Made a LinkedIn profile, went to a business conference, and wrote a post about why I wanted to work at Enlisted, a studio building the first production electric boat designed from the ground up. Interviewed the next day and got the internship. Fixed their printers, ran to Home Depot, and filmed the engineers at work.', img: beau, alt: 'Matthew with Beau Oyler, founder and CEO of Enlisted Design, in the studio', cap: 'With Beau Oyler, founder and CEO of Enlisted.' },
   { age: '16–17', text: 'Bought my first real camera. Became director of photography at Phuture Films and built a team around me that made five award-winning films in a short window, winning two national competitions. Shot weddings and brand work, and built cranes and rigs out of whatever was around.', img: crew, alt: 'Three cameramen at an event, smiling' },
   { age: '18', text: 'Designed and printed aero fairings to gain an edge on the race course. Founded North Media House and ran it through the summer. Two weeks before I left on my mission, I ran fifty miles through the night.', img: fairing, alt: '3D-printed textured fairing fitted to a bike seatpost' },
   { age: '18–20', text: 'Two years of full-time missionary service in the Philippines San Pablo Mission, in Tagalog. Long weeks, new places, and a lot of learning how to work with people.', img: suit, alt: 'Portrait in a dark suit and tie under green trees' },
@@ -89,8 +89,11 @@ const timeline = [
                 <YouTube id={t.video} title={t.videoTitle} poster={t.img} />
               </div>
             ) : t.img && (
-              <div class="frame tl-img">
-                <Image src={t.img} alt={t.alt} widths={[500, 1000]} sizes="(min-width: 900px) 34vw, 100vw" format="webp" />
+              <div>
+                <div class="frame tl-img">
+                  <Image src={t.img} alt={t.alt} widths={[500, 1000]} sizes="(min-width: 900px) 34vw, 100vw" format="webp" />
+                </div>
+                {t.cap && <p class="cap">{t.cap}</p>}
               </div>
             )}
           </div>
