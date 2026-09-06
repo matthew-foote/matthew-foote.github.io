@@ -302,6 +302,8 @@ export class RocketViewer {
     const targetSize = 2.2;
     const fit = targetSize / maxDim;
     pivot.scale.setScalar(fit);
+    // Onshape exports Z-up. Stand the engine upright: injector at the top, nozzle at the bottom.
+    pivot.rotation.x = -Math.PI / 2;
 
     this.scene.add(pivot);
     this.modelRoot = pivot;
@@ -491,21 +493,18 @@ export class RocketViewer {
     const fitted = new THREE.Box3().setFromObject(this.modelRoot);
     const sphere = fitted.getBoundingSphere(new THREE.Sphere());
     const fov = THREE.MathUtils.degToRad(this.camera.fov);
-    const zoom = close ? 0.72 : 0.9;
+    // zoom 1.0 = the whole engine just fits the frame; smaller is tighter.
+    const zoom = close ? 0.92 : 1.15;
     const dist = (sphere.radius / Math.sin(fov / 2)) * zoom;
 
-    // Bias target toward chamber / injector (upper stack)
     const target = sphere.center.clone();
-    target.y += sphere.radius * (close ? 0.12 : 0);
 
     this.controls.target.copy(target);
     this.camera.near = Math.max(dist / 200, 0.01);
     this.camera.far = dist * 40;
-    this.camera.position.set(
-      target.x + dist * (close ? 0.42 : 0.75),
-      target.y + dist * (close ? 0.08 : 0.35),
-      target.z + dist * (close ? 0.52 : 0.95)
-    );
+    // Three-quarter view, slightly above, so the injector head and the nozzle both read.
+    const dir = close ? new THREE.Vector3(0.42, 0.16, 0.52) : new THREE.Vector3(0.75, 0.35, 0.95);
+    this.camera.position.copy(target).addScaledVector(dir.normalize(), dist);
     this.camera.updateProjectionMatrix();
     this.controls.minDistance = this.modelRadius * 0.25;
     this.controls.maxDistance = this.modelRadius * 12;
