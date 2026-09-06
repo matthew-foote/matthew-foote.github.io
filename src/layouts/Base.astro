@@ -108,9 +108,12 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
           const sec = document.getElementById(id);
           if (sec && sec._fold && sections.includes(sec)) openSection(sec, { scroll });
         };
-        window.addEventListener('hashchange', () => openHash(true));
-        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => openHash(true), 0)));
-        openHash(false);
+        // Only in-page clicks open a section. A fresh load always starts folded, even if the address
+        // still carries a #hash from last time, and the hash is cleared afterwards so reloads start clean.
+        const openThenClean = () => { openHash(true); history.replaceState(null, '', location.pathname + location.search); };
+        window.addEventListener('hashchange', openThenClean);
+        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(openThenClean, 0)));
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
 
         // Expand all / collapse all, in the nav.
         const navList = document.querySelector('.nav nav ul');
