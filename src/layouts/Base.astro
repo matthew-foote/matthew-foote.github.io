@@ -29,8 +29,8 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
       <slot />
     </main>
     <script is:inline>
-      // Folding. Sections and job entries start folded so the page reads as an index; the whole
-      // header is the handle. Opening a section closes the others and brings it into view.
+      // Folding. Everything starts open. Each section and job entry can be folded from its header
+      // (the whole header is the handle) or from the floating pill while scrolled inside it.
       (() => {
         const CHEV = '<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,9 +47,9 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
         const makeToggle = (label) => {
           const btn = document.createElement('button');
           btn.type = 'button'; btn.className = 'fold-toggle';
-          btn.innerHTML = '<span class="fold-label">Expand</span>' + CHEV;
-          btn.setAttribute('aria-expanded', 'false');
-          btn.setAttribute('aria-label', 'Expand ' + label);
+          btn.innerHTML = '<span class="fold-label">Collapse</span>' + CHEV;
+          btn.setAttribute('aria-expanded', 'true');
+          btn.setAttribute('aria-label', 'Collapse ' + label);
           btn._label = label;
           return btn;
         };
@@ -65,7 +65,7 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
           const y = el.getBoundingClientRect().top + window.scrollY - 72;
           window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
         };
-        const openSection = (sec, { exclusive = true, scroll = true } = {}) => {
+        const openSection = (sec, { exclusive = false, scroll = true } = {}) => {
           if (exclusive) sections.forEach((s) => { if (s !== sec && isOpen(s)) setOpen(s, false); });
           setOpen(sec, true);
           if (scroll) requestAnimationFrame(() => reveal(sec));
@@ -86,7 +86,7 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
           sec.appendChild(body); body.classList.add('wrap');
           const label = (head.querySelector('h2') || {}).textContent || sec.id;
           const btn = makeToggle(label); head.appendChild(btn); sec._fold = btn;
-          sec.classList.add('foldable', 'is-collapsed'); sec.classList.remove('fold');
+          sec.classList.add('foldable'); sec.classList.remove('fold');
           sections.push(sec);
           wireHead(sec, head, () => (isOpen(sec) ? setOpen(sec, false) : openSection(sec)));
         });
@@ -97,23 +97,20 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
           makeBody(job, head, 'job-body');
           const label = (head.querySelector('h3') || {}).textContent || 'this job';
           const btn = makeToggle(label); head.appendChild(btn); job._fold = btn;
-          job.classList.add('foldable', 'is-collapsed'); job.classList.remove('fold');
+          job.classList.add('foldable'); job.classList.remove('fold');
           wireHead(job, head, () => (isOpen(job) ? setOpen(job, false) : (setOpen(job, true), requestAnimationFrame(() => reveal(job)))));
         });
 
-        // Deep links and nav clicks open the target section (and the first job, for Experience).
+        // Nav clicks and deep links unfold the target section if someone has folded it.
         const openHash = (scroll) => {
           const id = location.hash.slice(1);
           if (!id) return;
           const sec = document.getElementById(id);
           if (sec && sec._fold && sections.includes(sec)) openSection(sec, { scroll });
         };
-        // Only in-page clicks open a section. A fresh load always starts folded, even if the address
-        // still carries a #hash from last time, and the hash is cleared afterwards so reloads start clean.
-        const openThenClean = () => { openHash(true); history.replaceState(null, '', location.pathname + location.search); };
-        window.addEventListener('hashchange', openThenClean);
-        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(openThenClean, 0)));
-        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+        window.addEventListener('hashchange', () => openHash(false));
+        document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => setTimeout(() => openHash(false), 0)));
+        openHash(false);
 
         // Floating "Collapse" pill: fades in at the side once you've scrolled past an open
         // section's header, so the section can be folded from anywhere inside it.
@@ -160,7 +157,7 @@ const ogUrl = new URL(ogImage.src, Astro.site).href;
         if (navList) {
           const li = document.createElement('li');
           const all = document.createElement('button');
-          all.type = 'button'; all.className = 'nav-all'; all.textContent = 'Expand all';
+          all.type = 'button'; all.className = 'nav-all'; all.textContent = 'Collapse all';
           all.addEventListener('click', () => {
             const anyClosed = sections.some((s) => !isOpen(s));
             sections.forEach((s) => setOpen(s, anyClosed));
