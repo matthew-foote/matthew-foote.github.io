@@ -26,6 +26,7 @@ export const site = {
     poc: '7G6Phr2T33Y', // POC spec ad
     kizik: '', // upload the Kizik film, paste its ID here
     arcboat: 'rgaMez2KTzg', // unlisted; cleared for this site only
+    enlistedInterview: 'fh5XGv1CY-s', // talking-head interview example from Enlisted
     stnNationals: '8e72t_4ASEI', // STN Nationals winner, 24-hour on-demand challenge
     helicopter: 'itWjvH5ihZg', // Phuture Films example film for UKnighted
   },
