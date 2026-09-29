@@ -16,3 +16,5 @@ https://n.uguu.se/BesBRAuS.css | public/pioneer/style.css
 https://d.uguu.se/ubNzkvDD.json | public/pioneer/bom.json
 https://h.uguu.se/PdtSSTHh.glb | public/pioneer/models/full.glb
 https://d.uguu.se/DxZgLzjW.glb | public/pioneer/models/hover.glb
+https://d.uguu.se/abtLrWij.js | public/pioneer/app.v2.js
+https://d.uguu.se/jltTWCnG.css | public/pioneer/style.v2.css
