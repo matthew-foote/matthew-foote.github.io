@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIONEER · Interactive build</title>
+<meta name="description" content="PIONEER, a thrust-vector-control test vehicle by Matthew Foote. Explode the CAD, click any part to see what it costs, where to buy it, what it weighs and why it's there.">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="/" aria-label="Back to Matthew Foote's site">←</a>
+    <div>
+      <div class="wordmark">PIONEER</div>
+      <div class="sub">Thrust-vector-control test vehicle · interactive build</div>
+    </div>
+  </div>
+  <div class="build-toggle" role="radiogroup" aria-label="Vehicle build">
+    <button role="radio" aria-checked="true" data-build="full">Full build</button>
+    <button role="radio" aria-checked="false" data-build="hover">Hover-test build</button>
+  </div>
+  <dl class="stats">
+    <div><dt>Weight</dt><dd id="st-mass">–</dd></div>
+    <div><dt>Parts</dt><dd id="st-parts">–</dd></div>
+    <div><dt>Vehicle cost</dt><dd id="st-cost">–</dd></div>
+  </dl>
+</header>
+
+<main class="layout">
+  <aside class="panel bom" aria-label="Bill of materials">
+    <div class="panel-head">
+      <h2>Bill of materials</h2>
+      <input id="search" type="search" placeholder="Search parts" aria-label="Search parts">
+    </div>
+    <div class="massbar-wrap">
+      <div class="massbar" id="massbar" aria-hidden="true"></div>
+      <div class="massbar-legend" id="massbar-legend"></div>
+    </div>
+    <div class="bom-list" id="bom-list"></div>
+    <div class="bom-foot" id="bom-foot"></div>
+  </aside>
+
+  <section class="stage" aria-label="3D model">
+    <div id="viewer"></div>
+    <div class="loading" id="loading"><div class="spin"></div><span>Loading CAD…</span></div>
+    <div class="tip" id="tip" hidden></div>
+    <div class="controls">
+      <label class="explode">
+        <span>Explode</span>
+        <input id="explode" type="range" min="0" max="1" step="0.001" value="0">
+      </label>
+      <button id="btn-isolate" class="chip" aria-pressed="false">Isolate</button>
+      <button id="btn-reset" class="chip">Reset</button>
+    </div>
+    <div class="hint">Drag to orbit · scroll to zoom · click a part</div>
+  </section>
+
+  <aside class="panel detail" id="detail" aria-live="polite"></aside>
+</main>
+
+<nav class="mobile-tabs" aria-label="Panels">
+  <button data-tab="bom" aria-pressed="false">Parts list</button>
+  <button data-tab="detail" aria-pressed="true">Part details</button>
+</nav>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

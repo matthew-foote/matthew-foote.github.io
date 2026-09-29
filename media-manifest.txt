@@ -11,3 +11,8 @@ https://h.uguu.se/SDYXXFZg.jpg | src/assets/img/unisan-fhe.jpg
 https://h.uguu.se/WnBTZZmD.jpg | src/assets/img/rocket-launch.jpg
 https://n.uguu.se/iQfOMmoe.jpg | src/assets/img/byu-desk.jpg
 https://n.uguu.se/WYdCYwbM.glb | public/models/pathfinder.glb
+https://h.uguu.se/ZOVYDMlw.js | public/pioneer/app.js
+https://n.uguu.se/BesBRAuS.css | public/pioneer/style.css
+https://d.uguu.se/oJLmxrYj.json | public/pioneer/bom.json
+https://h.uguu.se/PdtSSTHh.glb | public/pioneer/models/full.glb
+https://d.uguu.se/DxZgLzjW.glb | public/pioneer/models/hover.glb
